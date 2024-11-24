@@ -37,8 +37,7 @@ const config: Config = {
         fuchsia: colors.fuchsia,
         pink: '#E0AFA0',
         rose: colors.rose,
-        brown: '#85625A'
-
+        brown: '#85625A',
         bg: {
           l: '#BCB8B1',
           d: '#2D2D2D',
