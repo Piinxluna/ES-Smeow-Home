@@ -1,17 +1,12 @@
 import type { Config } from 'tailwindcss'
 const colors = require('tailwindcss/colors')
-const { nextui } = require('@nextui-org/react')
 
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
-  future: {
-    hoverOnlyWhenSupported: true, // 👈 enable hover only when supported
-  },
   theme: {
     extend: {
       colors: {
@@ -72,32 +67,13 @@ const config: Config = {
         'detail-1': 'clamp(0.625rem,1vw + 0.5rem,0.875rem)' /* 10px to 14px */,
         'detail-2': 'clamp(0.5rem, 1vw + 0.5rem, 0.75rem)' /* 8px to 12px */,
       },
-    },
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '1rem',
-        sm: '2rem',
-        lg: '4rem',
-        xl: '5rem',
-        '2xl': '6rem',
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
-    boxShadow: {
-      '1': '0px 4px 15px 0px #DADADA',
-      '2': '10px 10px 30px 0px #E2E2E2, -10px -10px 30px 0px #F2F2F2',
-      none: 'none',
-    },
-    aspectRatio: {
-      square: '1 / 1',
-      '2/3': '2 / 3',
-      '4/3': '4 / 3',
-    },
   },
-  plugins: [
-    require('tailwind-scrollbar-hide'),
-    require('tailwind-scrollbar'),
-    nextui(),
-  ],
+  plugins: [],
 }
 export default config
