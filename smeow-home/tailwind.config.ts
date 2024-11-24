@@ -40,7 +40,7 @@ const config: Config = {
         ebrown: '#85625A',
         darkgray: '#463F3A',
         lightgray1: '#8A817C',
-        ligthgray2: '#BCB8B1',
+        lightgray2: '#BCB8B1',
         badge: '#F4F3EE',
         epink: '#E0AFA0',
         edarkpink: '#D6927D',

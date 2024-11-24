@@ -17,16 +17,16 @@ export default function Button({
   href?: string;
   target?: string;
 }) {
-  let theme = 'text-black font-semibold bg-white hover:bg-gray-500';
+  let theme = 'text-black font-semibold bg-white hover:bg-lightgray2';
   if (variant === 'secondary') {
-    theme = 'text-black font-semibold bg-white hover:bg-lightgray1';
+    theme = 'text-black font-semibold bg-lightgray1 hover:bg-darkgray';
   }
   if (variant === 'outline') {
     theme =
       'text-black font-semibold border-2 border-gray-950 bg-white hover:text-white hover:bg-black shadow-none';
   }
   if (variant === 'pink') {
-    theme = 'text-white font-semibold bg-epink hover:bg-edarkpink';
+    theme = 'text-white font-semibold bg-edarkpink hover:bg-epink';
   }
 
   if (href) {
