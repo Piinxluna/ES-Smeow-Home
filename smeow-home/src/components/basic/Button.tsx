@@ -19,7 +19,7 @@ export default function Button({
 }) {
   let theme = 'text-black font-semibold bg-white hover:bg-lightgray2';
   if (variant === 'secondary') {
-    theme = 'text-black font-semibold bg-lightgray1 hover:bg-darkgray';
+    theme = 'text-black font-semibold bg-lightgray2 hover:bg-lightgray1';
   }
   if (variant === 'outline') {
     theme =
@@ -31,13 +31,13 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href}>
-        <a
-          target={target}
+      <Link href={href}
+          target={target}>
+        <button
           className={`px-4 py-2 rounded-md shadow ${theme} ${className}`}
         >
           {children}
-        </a>
+        </button>
       </Link>
     );
   }
