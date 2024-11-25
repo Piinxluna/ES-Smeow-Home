@@ -7,9 +7,9 @@ export default function Home() {
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-24'>
       <NavBar/>
-      <CurrentTemp variant='primary'>25</CurrentTemp>
-      <CurrentTemp variant='secondary'>30</CurrentTemp>
-      <CurrentTemp variant='secondary'>35</CurrentTemp>
+      <CurrentTemp variant='primary' Temp={25}/>
+      <CurrentTemp variant='secondary' Temp={30}/>
+      <CurrentTemp variant='secondary' Temp={35}/>
     </main>
   )
 }
