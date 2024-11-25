@@ -1,4 +1,3 @@
-import Button from '@/components/basic/Button'
 import BacktoHomeButton from '@/components/basic/BackToHomeButton'
 
 export default function Home() {

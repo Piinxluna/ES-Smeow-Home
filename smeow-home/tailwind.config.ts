@@ -44,7 +44,7 @@ const config: Config = {
         badge: '#F4F3EE',
         epink: '#E0AFA0',
         edarkpink: '#D6927D',
-        'ered-100': '#D15E5E',
+        ered: '#D15E5E',
         eyellow: '#D1B62D',
         egreen: '#32C339',
         eblue: '#2B62C8',
