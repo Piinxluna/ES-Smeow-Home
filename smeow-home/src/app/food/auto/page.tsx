@@ -3,11 +3,10 @@ import Button from '@/components/basic/Button'
 import ConsumeBehavior from '@/components/basic/ConsumeBehavior'
 import Control from '@/components/basic/Control'
 import Header from '@/components/basic/Header'
-import Remaining from '@/components/basic/Remaining'
 import RemainingDetails from '@/components/basic/RemainingDetails'
 import CurrentMeal from '@/components/food/CurrentMeal'
 
-export default function Home() {
+export default function AutoFeeding() {
   return (
     <main className='flex flex-col px-32 py-16'>
       <div className='flex flex-row justify-between'>

@@ -5,7 +5,7 @@ import Header from '@/components/basic/Header'
 import Remaining from '@/components/basic/Remaining'
 import RemainingDetails from '@/components/basic/RemainingDetails'
 
-export default function Home() {
+export default function Water() {
   return (
     <main className='flex flex-col px-32 py-16'>
       <div className='flex flex-row justify-between'>
