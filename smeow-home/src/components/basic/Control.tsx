@@ -28,10 +28,10 @@ export default function Control({
   };
 
   return (
-    <div className={`${theme} flex flex-col items-center text-center py-8 px-6`}>
-      <p className="text-2xl font-bold text-black">{title}</p>
-      <p className="text-sm text-lightgray1 text-semibold p-2">{description}</p>
-      <OnOffButton Active='Open' InActive='Close'></OnOffButton>
+    <div className={`${theme} flex flex-col justify-center py-12 px-8 mt-2`}>
+      <p className="text-2xl font-bold text-black text-center">{title}</p>
+      <p className="text-sm text-lightgray1 font-semibold p-2 text-center">{description}</p>
+      <OnOffButton Active='Open' InActive='Close' className='w-full ,'></OnOffButton>
     </div>
   );
 }

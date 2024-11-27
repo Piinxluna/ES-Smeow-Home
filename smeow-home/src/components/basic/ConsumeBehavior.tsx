@@ -14,7 +14,7 @@ export default function Remaining({
   let theme = 'font-semibold bg-white w-fit h-fit rounded-lg';
   if (variant === 'water') {
     return (
-    <div className={`${theme} ${className} flex flex-col h-fit p-6`}>
+    <div className={`${theme} ${className} flex justify-center items-center flex-col h-fit p-6`}>
         <p className="text-2xl text-black font-bold text-center mb-4">Drinking Behavior</p>
         <div className="flex flex-row">
             <div className="flex flex-col items-center text-center px-4">
@@ -37,7 +37,7 @@ export default function Remaining({
     );
   } else if (variant === 'food') {
     return (
-        <div className={`${theme} ${className} flex flex-col h-fit p-6`}>
+        <div className={`${theme} ${className} flex justify-center items-center flex-col h-fit p-6`}>
             <p className="text-2xl text-black font-bold text-center mb-4">Eating Behavior</p>
             <div className="flex flex-row">
                 <div className="flex flex-col items-center text-center px-4">

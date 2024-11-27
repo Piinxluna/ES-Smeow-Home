@@ -34,7 +34,7 @@ export default function Button({
       <Link href={href}
           target={target}>
         <button
-          className={`md:px-2 md:py-2 px-2 py-2 rounded-md shadow ${theme} ${className} md:text-l text-sm`}
+          className={`p-2 rounded-md shadow ${theme} ${className} md:text-l text-sm`}
         >
           {children}
         </button>

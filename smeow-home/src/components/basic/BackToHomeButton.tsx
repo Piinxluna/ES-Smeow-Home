@@ -1,7 +1,11 @@
 import Button from '@/components/basic/Button'
 
-export default function BacktoHomeButton() {
+export default function BacktoHomeButton({
+    className = '',
+  }: {
+    className?: string;
+}) {
     return (
-        <Button variant='secondary' href='/'>Back to Home</Button>
+        <Button variant='secondary' href='/' className={className}>Back to Home</Button>
     )
 }
