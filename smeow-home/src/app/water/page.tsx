@@ -7,7 +7,7 @@ import RemainingDetails from '@/components/basic/RemainingDetails'
 
 export default function Home() {
   return (
-    <main className='flex flex-col px-32 py-12'>
+    <main className='flex flex-col px-32 py-16'>
       <div className='flex flex-row justify-between'>
         <Header></Header>
         <BacktoHomeButton className='mt-0'></BacktoHomeButton>
