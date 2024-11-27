@@ -13,7 +13,7 @@ export default function percentDetails({
   const weightleft = percent*2/100
   if (variant === 'water') {
     return (
-    <div className={`${theme} ${className} flex space-x-4 py-6 px-6 h-fit w-`}>
+    <div className={`${theme} ${className} flex space-x-4 py-6 px-6 h-fit`}>
         <div className="relative w-4 h-24 bg-lightgray2 rounded-full">
             <div 
             className={`absolute bottom-0 w-full bg-eblue rounded-full`} style={{ height: `${percent}%` }}>

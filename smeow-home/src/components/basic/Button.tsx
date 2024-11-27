@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Button({
   variant = 'primary',
   children,
-  className = 'text-black bg-white hover:bg-lightgray/80',
+  className = 'text-black bg-white hover:bg-lightgray/80 py-1 px-1 md:py-2 md:px-4 rounded-md shadow',
   onClick,
   href,
   target,
@@ -34,7 +34,7 @@ export default function Button({
       <Link href={href}
           target={target}>
         <button
-          className={`px-4 py-2 rounded-md shadow ${theme} ${className}`}
+          className={`md:px-4 md:py-2 px-2 py-2 rounded-md shadow ${theme} ${className} md:text-xl text-sm`}
         >
           {children}
         </button>

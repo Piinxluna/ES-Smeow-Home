@@ -2,6 +2,7 @@ import Button from '@/components/basic/Button'
 import BacktoHomeButton from '@/components/basic/BackToHomeButton'
 import NavBar from '@/components/navbar/NavBar'
 import CurrentTemp from '@/components/basic/CurrentTemp'
+import EatingBehavior from '@/components/food/EatingBehavior'
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
       <NavBar/>
       <CurrentTemp variant='primary' Temp={25}/>
       <CurrentTemp variant='secondary' Temp={30}/>
-      <CurrentTemp variant='secondary' Temp={35}/>
+      <EatingBehavior percent={87} nextRefill='8 hours' lastFed='18 Nov, 15:26' petStatus='not eaten'/>
     </main>
   )
 }
