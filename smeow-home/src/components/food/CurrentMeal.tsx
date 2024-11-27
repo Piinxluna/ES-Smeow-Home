@@ -17,7 +17,7 @@ export default function CurrentMeal({
   else if (petStatus === 'Not eaten'){color='text-ered'}
   else if (petStatus === 'Eating'){color='text-eblue'}
     return (
-        <div className="bg-white h-fit rounded-lg py-4 px-8">
+        <div className="bg-white h-fit rounded-lg py-9 px-8 mt-3">
             <p className="text-black text-2xl font-bold">Current meal</p>
             <p className="text-lightgray2 font-bold text-center text-md py-2">Fed at</p>
             <p className="text-ebrown font-bold text-center">{lastFed}</p>
