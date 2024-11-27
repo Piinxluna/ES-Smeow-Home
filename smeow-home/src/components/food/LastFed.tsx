@@ -21,8 +21,8 @@ export default function EatingBehavior({
   else if (petStatus === 'Not eaten'){color='text-epink'}
   else if (petStatus === 'Eating'){color='text-eblue/80'}
     return (
-        <div className="bg-ebrown h-72 rounded-lg">
-            <Remaining variant='food' percent={percent} nextRefill={nextRefill}>
+        <div className={`bg-ebrown h-72 rounded-lg ${className}`}>
+            <Remaining variant='food' percent={percent} nextRefill={nextRefill} className={`${className}`}>
             </Remaining>
             <p className="text-lightgray2 font-bold text-center mt-4">Last feed</p>
             <p className="text-white font-bold text-center">{lastFed}</p>

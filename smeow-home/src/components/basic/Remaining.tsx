@@ -14,7 +14,7 @@ export default function Remaining({
   let theme = 'font-semibold bg-white w-fit h-fit rounded-lg';
   if (variant === 'water') {
     return (
-    <div className={`${theme} ${className} flex space-x-6 md:py-6 md:px-6 h-fit py-6 px-16`}>
+    <div className={`${theme} ${className} flex justify-center space-x-6 md:py-6 md:px-6 h-fit py-6 px-16`}>
         <div className="relative w-4 h-32 bg-lightgray2 rounded-full">
             <div 
             className={`absolute bottom-0 w-full bg-eblue rounded-full`} style={{ height: `${percent}%` }}>
@@ -33,7 +33,7 @@ export default function Remaining({
     );
   } else if (variant === 'food') {
     return (
-      <div className={`${theme} ${className} flex space-x-6 md:py-6 md:px-6 h-fit py-6 px-20`}>
+      <div className={`${theme} ${className} flex justify-center space-x-6 md:py-6 md:px-6 h-fit py-6 px-20`}>
         <div className="relative w-4 h-32 bg-lightgray2 rounded-full">
             <div 
             className={`absolute bottom-0 w-full bg-ebrown rounded-full`} style={{ height: `${percent}%` }}>

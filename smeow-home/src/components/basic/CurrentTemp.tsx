@@ -24,7 +24,7 @@ export default function CurrentTemp({
   if (variant === 'primary') {
     return (
       <div className={`${theme} ${className} md:py-4 md:px-8 px-28 py-4`}>
-        <h2 className="text-center text-xl text-black font-bold mb-2">Temperature</h2>
+        <h2 className="text-center text-2xl text-black font-bold mb-2">Temperature</h2>
         <h1 className={`text-center text-4xl font-bold ${tempColor}`}>{Temp} °C</h1>
       </div>
     );
