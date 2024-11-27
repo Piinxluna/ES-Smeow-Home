@@ -10,7 +10,7 @@ export default function Home() {
       <NavBar/>
       <CurrentTemp variant='primary' Temp={25}/>
       <CurrentTemp variant='secondary' Temp={30}/>
-      <EatingBehavior percent={87} nextRefill='8 hours' lastFed='18 Nov, 15:26' petStatus='not eaten'/>
+      <EatingBehavior percent={87} nextRefill='8 hours' lastFed='18 Nov, 15:26' petStatus='Not eaten'/>
     </main>
   )
 }
