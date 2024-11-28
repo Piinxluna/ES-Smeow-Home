@@ -72,7 +72,7 @@ export default function AutoFeeding() {
                       className="bg-lightgray2 text-black py-1 w-full rounded-lg text-md font-medium">
                       Add
                     </button>
-                    <div className='text-black text-md'>------------- or ------------</div>
+                    <div className='text-black text-md'>------------ or ------------</div>
                   </div>
                 ) : (
                   <p className="text-ered text-xl font-medium text-center mt-4">
