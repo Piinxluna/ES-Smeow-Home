@@ -21,12 +21,18 @@ export default function AutoFeeding() {
   return (
     <main className='flex flex-col px-32 py-12'>
       <div className='flex flex-row justify-between'>
-        <Header></Header>
+        <Header className='text-5xl'></Header>
         <BacktoHomeButton className='mt-4'></BacktoHomeButton>
       </div>
       <div className='flex flex-row mt-8 '>
         <div>
-          <p className ='text-4xl text-ebrown font-bold ml-10 mb-10'>Food</p>
+        <div className='flex flex-row'>
+          <img
+            src="/resources/images/Food.png"
+            alt={'food icon'}
+            className="rounded-lg h-10 max-w-md ml-4"
+            />
+          <p className ='text-4xl text-ebrown font-bold ml-4 mb-10'>Food</p></div>
           <RemainingDetails variant='food' percent={87} className='flex ml-10 transform scale-125'></RemainingDetails>
         </div>
         <ConsumeBehavior variant='food' lastHour={380} today={420} className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'></ConsumeBehavior>
