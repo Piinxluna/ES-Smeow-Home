@@ -20,7 +20,7 @@ export default function Remaining({
   let theme = 'font-semibold bg-white w-full h-fit rounded-lg';
   if (variant === 'water') {
     return (
-    <Link href="/water" className=''>
+    <Link href="/water" className='w-full'>
       <div className={`${theme} ${className} flex justify-center space-x-6 md:py-6 md:px-6 py-6 px-16`}>
           <div className={`relative w-${width} h-32 bg-lightgray2 rounded-full`}>
               <div 

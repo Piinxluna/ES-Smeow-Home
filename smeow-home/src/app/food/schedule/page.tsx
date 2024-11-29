@@ -38,8 +38,6 @@ export default function AutoFeeding() {
         <ConsumeBehavior variant='food' lastHour={380} today={420} className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'></ConsumeBehavior>
         <CurrentMeal lastFed={'18 Nov, 15:26'} petStatus={'Not eaten'} className='mt-4'></CurrentMeal>
       </div>
-
-      
             <div className='flex flex-row justify-center mt-6 '>
 
               <div className='flex mt-2 bg-white rounded-lg mr-12 w-full px-4 py-8'>
@@ -85,7 +83,6 @@ export default function AutoFeeding() {
                     Maximum 3 feeding times allowed.
                   </p>
                 )}
-
                 <div className="mt-4 mb-4 w-full">
                   <Button
                     variant="secondary"
@@ -94,17 +91,13 @@ export default function AutoFeeding() {
                   >
                     Change to auto mode
                   </Button>
-                  
                 </div>
-
               </div>
               </div>
-
               <Control 
                 variant="food"
                 className="flex transform scale-150 flex-grow"
               />
-
             </div>
           </main>
   )
