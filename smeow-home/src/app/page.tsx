@@ -10,94 +10,113 @@ import CurrentHumidity from '@/components/basic/CurrentHumidity';
 import Remaining from '@/components/basic/Remaining';
 import Header from '@/components/basic/Header';
 import Link from 'next/link';
-import { error } from 'console';
+import CurrentCML from '@/components/basic/CurrentCML';
 
 export default function Home() {
-  const [isReady, setIsReady] = useState(false);
   const [weather, setWeather] = useState<Weather>();
   const [water, setWater] = useState<Water>();
 
   useEffect(() => {
     const fetchData = () => {
       const databaseRef = ref(database);
-      
+
       // Fetch weather data
       get(child(databaseRef, 'weather'))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const weatherVal = snapshot.val();
-            setWeather(weatherVal);
+            setWeather(snapshot.val());
           } else {
-            console.log('no weather data available');
+            console.log('No weather data available');
           }
         })
-        .catch((error) => {
-          console.log('Error fetching weather:', error);
-        });
+        .catch((error) => console.log('Error fetching weather:', error));
 
       // Fetch water data
       get(child(databaseRef, 'water'))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const waterVal = snapshot.val();
-            setWater(waterVal);
+            setWater(snapshot.val());
           } else {
-            console.log('no water data available');
+            console.log('No water data available');
           }
         })
-        .catch((error) => {
-          console.log('Error fetching water:', error);
-        });
+        .catch((error) => console.log('Error fetching water:', error));
     };
 
     fetchData();
   }, []);
 
   return (
-    <main className="flex flex-row justify-items-center px-12 py-8 max-h-full">
-      <div className="flex flex-col ml-12 w-[70%]">
-        <div className="flex flex-col items-center w-full max-w-[800px] rounded-lg mt-6">
-          <NavBar variant="secondary" className="absolute z-10 flex justify-items-center items-center" />
-          <div className="relative w-full">
+    <main className="flex flex-col lg:flex-row justify-center items-center lg:items-start px-4 lg:px-12 py-8 max-h-full">
+      <div className="flex flex-col w-full lg:w-[70%] items-center lg:items-start lg:ml-16">
+        <Header className='lg:hidden mb-4'></Header>
+        <NavBar
+          variant="primary"
+          className="flex lg:!hidden lg:absolute z-10 justify-items-center items-center lg:mt-8 lg:ml-52 mt-4"
+        />
+
+        <NavBar
+          variant="secondary"  
+          className="hidden lg:flex absolute z-10 justify-items-center items-center lg:mt- lg:ml-52"
+        />
+        <div className="relative w-full max-w-[800px] rounded-lg mt-4 ">
+          <Image
+            src="/resources/web/LiveVideoBackground1.png"
+            width={800}
+            height={700}
+            alt="Meow Background"
+            className="w-full rounded-lg"
+          />
+          <div className="absolute top-0 text-l w-[90%]">
             <Image
-              src="/resources/web/LiveVideoBackground1.png"
-              width={800}
-              height={700}
-              alt="Meow Background"
-              className="relative"
+              src="/resources/images/CatLive.png"
+              width={24}
+              height={24}
+              alt="Live Picture"
+              className="lg:mt-32 mt-16 ml-8  lg:ml-40"
             />
-            <div className="absolute top-0 text-l w-[90%]">
+            <p className="absolute top-0 text-xl text-darkgray font-extrabold lg:mt-32 mt-16 ml-16 lg:ml-48">
+              Live
+            </p>
+            <p className="absolute top-0 hidden lg:block text-sm text-darkgray w-full lg:mt-32 lg:ml-64">
+              (Last sync at 18/11/2024, 15:10:36)
+            </p>
+            <Link
+              href="/watch-live"
+              className="cursor-pointer absolute top-0 right-0 lg:mt-32 mt-16 mr-4 lg:mr-32"
+            >
               <Image
-                src="/resources/images/CatLive.png"
+                src="/resources/images/ZoomIn.png"
                 width={24}
                 height={24}
-                alt="Meow Background"
-                className="mt-32 ml-40"
+                alt="Zoom Background"
               />
-              <p className="absolute top-0 text-xl text-darkgray font-extrabold mt-32 ml-48">Live</p>
-              <p className="absolute top-0 text-sm text-darkgray w-full mt-32 ml-64">
-                (Last sync at 18/11/2024, 15:10:36)
-              </p>
-              <Link href="/watch-live" className="cursor-pointer">
-                <Image
-                  src="/resources/images/ZoomIn.png"
-                  width={24}
-                  height={24}
-                  alt="Zoom Background"
-                  className="absolute top-0 right-0 mt-32 mr-32"
-                />
-              </Link>
-            </div>
-            <div className="absolute top-0 mt-40 ml-10 w-[90%] h-[76%] bg-darkgray rounded-lg z-10 flex items-center justify-center" />
+            </Link>
           </div>
+          <div className="absolute top-0 lg:mt-40 mt-24 ml-4 lg:ml-10 w-[90%] lg:h-[76%] h-[64%] bg-darkgray rounded-lg z-10 flex items-center justify-center" />
         </div>
       </div>
-      <div className="flex flex-col mr-12 mt-8 justify-items-center items-center space-y-8 w-[30%]">
-        <Header className="mt-12 mb-6" />
-        <CurrentTemp variant="primary" Temp={weather?.temperature ?? 0} className="w-full" />
-        <CurrentHumidity Humidity={weather?.humidity ?? 0} />
-        <Remaining variant="water" remainingAmount={water?.waterLeft ?? 0} nextRefill="1 Day 14 Hours" className="w-full" />
-        {/* <LastFed percent={40} nextRefill={'1 Day 14 Hours'} lastFed={'18 Nov, 15:26'} petStatus={'Not eaten'} className='w-full'></LastFed> */}
+
+      {/* Right Section */}
+      <div className="flex flex-col w-full lg:w-[30%] items-center justify-center h-full space-y-8 mx-auto">
+        <Header className="hidden lg:flex mb-6" />
+        <CurrentTemp
+          variant="primary"
+          Temp={weather?.temperature ?? 0}
+          className="w-full"
+        />
+        <CurrentHumidity 
+          Humidity={weather?.humidity ?? 0}
+          className='w-full' 
+        />
+        <CurrentCML CML={weather?.airQuality ?? 0}
+        className='w-full'></CurrentCML>
+        <Remaining
+          variant="water"
+          remainingAmount={water?.waterLeft ?? 0}
+          nextRefill="1 Day 14 Hours"
+          className="w-full"
+        />
       </div>
     </main>
   );

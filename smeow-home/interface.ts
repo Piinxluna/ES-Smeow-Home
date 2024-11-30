@@ -15,6 +15,7 @@ interface DrinkingStatus {
 interface Weather {
   humidity: number
   temperature: number
+  airQuality: number
 }
 
 interface Live {
