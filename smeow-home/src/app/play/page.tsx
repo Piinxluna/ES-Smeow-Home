@@ -150,6 +150,7 @@ export default function Home() {
         </div>
         <div className='w-[30%] h-[240px] rounded-lg bg-darkgray'></div>
       </div>
+      </div>
     </main>
   )
 }

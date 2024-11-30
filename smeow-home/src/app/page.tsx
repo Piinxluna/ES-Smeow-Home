@@ -10,6 +10,7 @@ import CurrentHumidity from '@/components/basic/CurrentHumidity';
 import Remaining from '@/components/basic/Remaining';
 import Header from '@/components/basic/Header';
 import Link from 'next/link';
+import CurrentCML from '@/components/basic/CurrentCML';
 
 export default function Home() {
   const [weather, setWeather] = useState<Weather>();
@@ -108,6 +109,8 @@ export default function Home() {
           Humidity={weather?.humidity ?? 0}
           className='w-full' 
         />
+        <CurrentCML CML={weather?.airQuality ?? 0}
+        className='w-full'></CurrentCML>
         <Remaining
           variant="water"
           remainingAmount={water?.waterLeft ?? 0}

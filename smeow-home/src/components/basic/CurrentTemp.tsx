@@ -12,12 +12,13 @@ export default function CurrentTemp({
 }) {
   let theme = 'font-semibold bg-white w-fit h-fit rounded-lg';
   let tempColor = '';
+  let ideal = 25;
 
-  if (Temp >= 21 && Temp <= 28) {
+  if (Math.abs(Temp - ideal) <= 4) {
     tempColor = 'text-egreen';
-  } else if (Temp > 28 && Temp <= 34) {
+  } else if (Math.abs(Temp - ideal) <= 6) {
     tempColor = 'text-eyellow';
-  } else if (Temp > 34) {
+  } else if (Math.abs(Temp - ideal) <= 9) {
     tempColor = 'text-ered';
   }
 
