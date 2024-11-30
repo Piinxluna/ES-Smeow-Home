@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+
+interface OnOffButtonProps {
+  Active: string;
+  InActive: string;
+  isSelected: boolean;
+  onClick: () => void;
+  className?: string;
+}
 
 export default function OnOffButton({
-  Active='',
-  InActive='',
+  Active = '',
+  InActive = '',
+  isSelected,
+  onClick,
   className = '',
-}: {
-  Active?: string;
-  InActive?: string;
-  className?: string;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
+}: OnOffButtonProps) {
   return (
     <button
-      onClick={handleToggle}
-      className={`mt-2 py-2 px-4 rounded transition-all duration-300 hover:bg-lightgray1 hover:text-white ${
-        isOpen ? 'bg-darkgray text-white' : 'border border-darkgray text-darkgray'
-      } ${className}`}
+      onClick={onClick}
+      className={`${className} mt-2 py-2 px-4 rounded transition-all duration-300 hover:bg-lightgray1 hover:text-white ${
+        isSelected ? 'bg-darkgray text-white' : 'border border-darkgray text-darkgray'
+      }`}
     >
-      {isOpen ? `${InActive}` : `${Active}`}
+      {isSelected ? Active : InActive}
     </button>
   );
 }

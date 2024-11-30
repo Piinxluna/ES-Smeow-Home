@@ -12,7 +12,7 @@ export default function Home() {
       <div className="flex flex-row justify-end mt-4 mb-4">
           <Image
                 src='/resources/images/CatLive.png'
-                width={32}
+                width={36}
                 height={32}
                 alt="Zoom Background"
                 className=''
