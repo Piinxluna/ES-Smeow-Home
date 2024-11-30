@@ -1,3 +1,4 @@
+#if 0
 // Original Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -883,3 +884,4 @@ void startCameraServer(int hPort, int sPort){
         httpd_register_uri_handler(stream_httpd, &favicon_ico_uri);
     }
 }
+#endif
