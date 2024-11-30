@@ -57,7 +57,7 @@ boolean line_sent = false;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   unsigned long ms = millis();
   while (WiFi.status() != WL_CONNECTED)
@@ -80,7 +80,7 @@ void setup()
 
   myServo1.attach(servoPin1);
   myServo1.attach(servoPin2);
-
+  Serial.begin(9600);
   Serial.println("SetUp");
   myServo1.write(0);
   myServo2.write(0);
