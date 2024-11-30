@@ -57,9 +57,9 @@ export default function Home() {
 
         <NavBar
           variant="secondary"  
-          className="hidden lg:flex absolute z-10 justify-items-center items-center lg:mt- lg:ml-52"
+          className="hidden lg:flex absolute z-10 justify-items-center items-center lg:mt-6 lg:ml-60"
         />
-        <div className="relative w-full max-w-[800px] rounded-lg mt-4 ">
+        <div className="relative w-full max-w-[800px] rounded-lg mt-4">
           <Image
             src="/resources/web/LiveVideoBackground1.png"
             width={800}

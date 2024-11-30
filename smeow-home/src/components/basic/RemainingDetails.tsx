@@ -10,8 +10,11 @@ export default function percentDetails({
   className?: string;
 }) {
   let theme = 'font-semibold bg-white w-fit h-fit rounded-lg';
-  const percent = Math.round((remainingAmount * 100) / 1000);
-  const weightleft = (percent * 1) / 100;
+  let percent = Math.round(remainingAmount);
+  if(percent >100) {
+    percent = 100;
+  }
+  let weightleft = ((percent * 1) / 100).toFixed(2);
 
   if (variant === 'water') {
     return (

@@ -25,7 +25,7 @@ export default function CurrentCML({
     return (
       <div className={`${theme} ${className} md:py-4 md:px-8 px-28 py-4`}>
         <h2 className="text-center text-2xl text-black font-bold mb-2">CML</h2>
-        <h1 className={`text-center text-4xl font-bold ${CMLColor}`}>{CML} %</h1>
+        <h1 className={`text-center text-4xl font-bold ${CMLColor}`}>{CML.toFixed(1)} %</h1>
       </div>
     );}
   return null;
