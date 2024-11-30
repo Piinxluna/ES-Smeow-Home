@@ -5,28 +5,60 @@ import BacktoHomeButton from '@/components/basic/BackToHomeButton';
 import Header from '@/components/basic/Header';
 import Image from 'next/image';
 import OnOffButton from '@/components/basic/OnOffButton';
-import React, { useState , useEffect } from 'react';
+import { child, get, ref, remove, set } from 'firebase/database';
+import { useEffect, useState } from 'react';
+import { database } from '@/app/firebaseConfig';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<string>('');
-  const [isReady, setIsReady] = useState(false);
-  const [water, setWater] = useState<Water>();
+  const [mode , setMode] = useState<number>();
+
+  const handleModeChange = async (clickedMode: number) => {
+    try {
+      // Check if clicking same mode
+      if (mode === clickedMode) {
+        // Reset mode to null
+        await fetch('/api/lasermode', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ mode: null })
+        });
+        setMode(undefined);
+        remove(ref(database, 'control/' + 'laserMode'));
+      } else {
+        // Change to new mode
+        await fetch('/api/lasermode', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ mode: clickedMode })
+        });
+        setMode(clickedMode);
+        set(ref(database, 'control/' + 'laserMode'), clickedMode);
+      }
+    } catch (error) {
+      console.error('Error updating laser mode:', error);
+    }
+  };
   
   useEffect(() => {
     const fetchData = () => {
       const databaseRef = ref(database);
       // Fetch water data
-      get(child(databaseRef, 'control'))
+      get(child(databaseRef, 'control/laserMode'))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const waterVal = snapshot.val();
-            setWater(waterVal);
+            const modeval = snapshot.val();
+            setMode(modeval);
           } else {
-            console.log('no water data available');
+            console.log('no laser mode data available');
           }
         })
         .catch((error) => {
-          console.log('Error fetching water:', error);
+          console.log('Error fetching laser mode:', error);
         });
     };
 
@@ -58,42 +90,60 @@ export default function Home() {
               Active='Off' 
               InActive='Off' 
               isSelected={activeButton === 'Off'}
-              onClick={() => setActiveButton(activeButton === 'Off' ? '' : 'Off')}
+              onClick={() => {
+                setActiveButton(activeButton === 'Off' ? '' : 'Off');
+                handleModeChange(0);
+              }}
               className=''
             />
             <OnOffButton 
               Active='Random' 
               InActive='Random'
               isSelected={activeButton === 'Random'}
-              onClick={() => setActiveButton(activeButton === 'Random' ? '' : 'Random')}
+              onClick={() => {
+                setActiveButton(activeButton === 'Random' ? '' : 'Random');
+                handleModeChange(1);
+              }}
               className=''
             />
             <OnOffButton 
               Active='Zig-Zag' 
               InActive='Zig-Zag'
               isSelected={activeButton === 'Zig-Zag'}
-              onClick={() => setActiveButton(activeButton === 'Zig-Zag' ? '' : 'Zig-Zag')}
+              onClick={() => {
+                setActiveButton(activeButton === 'Zig-Zag' ? '' : 'Zig-Zag');
+                handleModeChange(2);
+              }}
               className=''
             />
             <OnOffButton 
               Active='Zig-Zag flip' 
               InActive='Zig-Zag flip'
               isSelected={activeButton === 'Zig-Zag flip'}
-              onClick={() => setActiveButton(activeButton === 'Zig-Zag flip' ? '' : 'Zig-Zag flip')}
+              onClick={() => {
+                setActiveButton(activeButton === 'Zig-Zag flip' ? '' : 'Zig-Zag flip');
+                handleModeChange(3);
+              }}
               className=''
             />
             <OnOffButton 
               Active='Circle' 
               InActive='Circle'
               isSelected={activeButton === 'Circle'}
-              onClick={() => setActiveButton(activeButton === 'Circle' ? '' : 'Circle')}
+              onClick={() => {
+                setActiveButton(activeButton === 'Circle' ? '' : 'Circle');
+                handleModeChange(4);
+              }}
               className=''
             />
             <OnOffButton 
               Active='Dash' 
               InActive='Dash'
               isSelected={activeButton === 'Dash'}
-              onClick={() => setActiveButton(activeButton === 'Dash' ? '' : 'Dash')}
+              onClick={() => {
+                setActiveButton(activeButton === 'Dash' ? '' : 'Dash');
+                handleModeChange(5);
+              }}
               className=''
             />
           </div>
