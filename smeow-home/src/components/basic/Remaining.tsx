@@ -18,7 +18,7 @@ export default function Remaining({
   width = '4', // Default width in px
 }: RemainingProps) {
   let theme = 'font-semibold bg-white w-full h-fit rounded-lg';
-  const percent = Math.round((remainingAmount * 100) / 1000);
+  const percent = Math.round(remainingAmount);
   if (variant === 'water') {
     return (
     <Link href="/water" className='w-full'>

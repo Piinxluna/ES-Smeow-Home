@@ -16,7 +16,7 @@ export default function CurrentHumidity({
   if (Humidity >= 30 && Humidity <= 50) {
     HumidityColor = 'text-egreen';
   } else if (Humidity < 30) {
-    HumidityColor = 'text-eyellow';
+    HumidityColor = 'text-ered';
   } else if (Humidity > 50) {
     HumidityColor = 'text-ered';
   }
