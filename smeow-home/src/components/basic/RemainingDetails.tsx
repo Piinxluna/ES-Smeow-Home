@@ -2,15 +2,16 @@
 
 export default function percentDetails({
   variant = 'water',
-  percent,
+  remainingAmount,
   className = '',
 }: {
   variant?: 'water' | 'food';
-  percent: number;
+  remainingAmount: number;
   className?: string;
 }) {
   let theme = 'font-semibold bg-white w-fit h-fit rounded-lg';
-  const weightleft = (percent * 2) / 100;
+  const percent = Math.round((remainingAmount * 100) / 1000);
+  const weightleft = (percent * 1) / 100;
 
   if (variant === 'water') {
     return (
@@ -32,7 +33,7 @@ export default function percentDetails({
               <div className="ml-6 h-12 border-l-2 border-black"></div>
               <div className="flex flex-col ml-4 text-center">
                 <p className="text-lightgray2 text-sm font-bold">Weight</p>
-                <p className="text-eblue text-l font-bold">{weightleft} / 2 L.</p>
+                <p className="text-eblue text-l font-bold">{weightleft} / 1 L.</p>
               </div>
             </div>
           </div>

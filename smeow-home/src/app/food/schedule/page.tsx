@@ -33,7 +33,7 @@ export default function AutoFeeding() {
             className="rounded-lg h-10 max-w-md ml-4"
             />
           <p className ='text-4xl text-ebrown font-bold ml-4 mb-10'>Food</p></div>
-          <RemainingDetails variant='food' percent={87} className='flex ml-10 transform scale-125'></RemainingDetails>
+          <RemainingDetails variant='food' remainingAmount={100} className='flex ml-10 transform scale-125'></RemainingDetails>
         </div>
         <ConsumeBehavior variant='food' lastHour={380} today={420} className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'></ConsumeBehavior>
         <CurrentMeal lastFed={'18 Nov, 15:26'} petStatus={'Not eaten'} className='mt-4'></CurrentMeal>
