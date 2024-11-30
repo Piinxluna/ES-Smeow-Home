@@ -95,7 +95,9 @@ void loop() {
   digitalWrite(TRIG, LOW);
 
   // Measure distance
-  duration = pulseIn(ECHO, HIGH, 30000); // 30ms timeout
+  duration = pulseIn(ECHO, HIGH); // 50ms timeout
+  Serial.print("Duration: ");
+  Serial.println(duration);
   if (duration > 0) {
     distance = (duration * 0.034) / 2;
 
@@ -136,6 +138,7 @@ void loop() {
 
     isDatabaseSetComplete = false; // Reset flag before operation
     Database.set<object_t>(aClient, "/water", object_t(serializedObj), asyncCB);
+    Database.get(aClient, "/control", asyncCB, false, "openWater");
 
     unsigned long startWait = millis();
     while (!isDatabaseSetComplete && millis() - startWait < 5000) {
@@ -172,8 +175,35 @@ void asyncCB(AsyncResult &aResult) {
   }
 
   if (aResult.available()) {
-    Firebase.printf("task: %s, payload: %s\n", aResult.uid().c_str(), aResult.c_str());
-  }
+      Firebase.printf("task: %s, payload: %s, resultPath: %s\n", aResult.uid().c_str(), aResult.c_str(), aResult.path());
+
+      // Check if the resultPath matches the expected path
+      if (aResult.path() == "/control") {
+        // Parse the JSON payload
+        StaticJsonDocument<256> jsonDoc; // Adjust size as needed
+        DeserializationError error = deserializeJson(jsonDoc, aResult.c_str());
+
+        if (error) {
+          Serial.print("JSON deserialization failed: ");
+          Serial.println(error.c_str());
+          return;
+        }
+
+        // Access the "openWater" field
+        if (jsonDoc.containsKey("openWater")) {
+          bool openWater = jsonDoc["openWater"];
+          if (openWater) {
+            Serial.println("Open pump");
+            digitalWrite(PUMP_PIN, HIGH);
+          } else {
+            Serial.println("Close pump");
+            digitalWrite(PUMP_PIN, LOW);
+          }
+        } else {
+          Serial.println("Key 'openWater' not found in JSON payload.");
+        }
+      }
+    }
 
   isDatabaseSetComplete = true;  // Mark as complete
 }
