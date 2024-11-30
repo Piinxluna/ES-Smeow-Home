@@ -1,6 +1,6 @@
 'use client';
 
-import { child, get, ref } from 'firebase/database';
+import { child, get, ref, set } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { database } from '@/app/firebaseConfig';
 
@@ -15,6 +15,7 @@ export default function Water(
 ) {
   const [isReady, setIsReady] = useState(false);
   const [water, setWater] = useState<Water>();
+  const [control, setControl] = useState<Control>();
 
   useEffect(() => {
     const fetchData = () => {
@@ -32,10 +33,24 @@ export default function Water(
         .catch((error) => {
           console.log('Error fetching water:', error);
         });
-    };
 
+          // Fetch water data
+          get(child(databaseRef, 'control' + '/openWater'))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const controlVal = snapshot.val();
+              setControl(controlVal);
+            } else {
+              console.log('no water open data available');
+            }
+          })
+          .catch((error) => {
+            console.log('Error fetching water data:', error);
+          });
+      };
     fetchData();
   }, []);
+  
   return (
     <main className='flex flex-col px-32 py-16'>
       <div className='flex flex-row justify-between'>
@@ -48,7 +63,11 @@ export default function Water(
           <RemainingDetails variant='water' remainingAmount={water?.waterLeft ?? 0} className='flex ml-8 transform scale-125'></RemainingDetails>
         </div>
         <ConsumeBehavior variant='water' lastHour={water?.totalLastHour ?? 0} today={water?.totalToday ?? 0} className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'></ConsumeBehavior>
-        <Control variant='water' className='flex transform scale-150'></Control>
+        <Control 
+          variant='water' 
+          isTrue={!!control}
+          className='flex transform scale-150'
+        />
       </div>
     </main>
   )

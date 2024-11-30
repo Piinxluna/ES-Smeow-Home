@@ -5,10 +5,33 @@ import BacktoHomeButton from '@/components/basic/BackToHomeButton';
 import Header from '@/components/basic/Header';
 import Image from 'next/image';
 import OnOffButton from '@/components/basic/OnOffButton';
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<string>('');
+  const [isReady, setIsReady] = useState(false);
+  const [water, setWater] = useState<Water>();
+  
+  useEffect(() => {
+    const fetchData = () => {
+      const databaseRef = ref(database);
+      // Fetch water data
+      get(child(databaseRef, 'control'))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const waterVal = snapshot.val();
+            setWater(waterVal);
+          } else {
+            console.log('no water data available');
+          }
+        })
+        .catch((error) => {
+          console.log('Error fetching water:', error);
+        });
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <main className='flex min-h-screen flex-col py-16 px-24'>
