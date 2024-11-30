@@ -6,8 +6,8 @@ export default function Home() {
   return (
     <main className='flex flex-col md:px-32 md:py-12 min-h-screen'>
       <div className='md:hidden w-[390px] h-[844px] flex flex-col justify-center items-center bg-gradient-to-r from-purple-200 to-rose-200'>
-        <p className='text-center text-4xl text-black font-semibold mb-8 w-[70%]'>Please rotate the screen.</p>
-        <BacktoHomeButton></BacktoHomeButton>
+        <p className='text-center text-4xl text-black font-bold mb-8 w-[70%]'>Please rotate the screen.</p>
+        <BacktoHomeButton className="bg-white flex tranform scale-125"></BacktoHomeButton>
       </div>
       <div className="md:flex flex-col hidden md:p-4">
         <div className='flex flex-row justify-between'>
