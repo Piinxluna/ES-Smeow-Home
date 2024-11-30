@@ -70,11 +70,11 @@ export default function Control({
   };
 
   return (
-    <div className={`${theme} flex flex-col justify-center py-12 px-10 mt-2`}>
+    <div className={`${theme} ${className} flex flex-col justify-center md:py-12 md:px-10 py-8 px-6 mt-2`}>
       <p className="text-2xl font-bold text-black text-center">{title}</p>
       <p className="text-sm text-lightgray1 font-semibold py-2 text-center">{description}</p>
       <OnOffButton 
-        className='w-full' 
+        className='w-[70%] flex items-center justify-center mx-auto mt-2' 
         variant={buttonType} 
         Active={act}
         InActive={inAct}
