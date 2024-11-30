@@ -3,7 +3,7 @@
 #include <FirebaseClient.h>
 #include <ArduinoJson.h>
 #include <ESP32Servo.h>
-// #include <TridentTD_LineNotify.h>
+#include <TridentTD_LineNotify.h>
 
 #define WIFI_SSID "JLTOT_2.4G"
 #define WIFI_PASSWORD "70be9055"
@@ -53,7 +53,14 @@ DHT dht(DHTPIN, DHTTYPE);
 
 // Line notify
 #define LINE_TOKEN "9J4MCiXa7aDUbNpNwsUCsl4jl7A2OmeKjXot2H5MQHt"
-boolean line_sent = false;
+unsigned long line_last_sent = 0;
+
+// Critical value
+float ideal_temp = 25;
+float ideal_humid = 40;
+float critical_temp = 9;
+float critical_humid = 10;
+float critical_CO = 70;
 
 void setup()
 {
@@ -80,7 +87,7 @@ void setup()
 
   myServo1.attach(servoPin1);
   myServo1.attach(servoPin2);
-  Serial.begin(9600);
+  // Serial.begin(9600);
   Serial.println("SetUp");
   myServo1.write(0);
   myServo2.write(0);
@@ -91,8 +98,8 @@ void setup()
   pinMode(MQ_7, INPUT);
 
   // Line notify set token
-  // Serial.println(LINE.getVersion());
-  // LINE.setToken(LINE_TOKEN);
+  Serial.println(LINE.getVersion());
+  LINE.setToken(LINE_TOKEN);
 
   delay(2000); // Initial delay for sensor to stabilize
 }
@@ -109,8 +116,6 @@ void loop()
 
   if (app.ready() && millis() - tmo > 1000)
   {
-    line_sent = false;
-
     tmo = millis();
     JsonDocument doc;
     doc["temperature"] = t;
@@ -128,17 +133,35 @@ void loop()
 
   if (!isnan(h) && !isnan(t) && !isnan(a))
   {
-    Serial.print("Humidity: ");
-    Serial.print(h);
-    Serial.print("%  Temperature: ");
-    Serial.print(t);
-    Serial.print("°C CO level: ");
-    Serial.print(a);
-    Serial.println("ppm°C ");
-    if (line_sent == false)
-    {
-      // LINE.notify("Humidity: " + String(h) + "%\nTemperature: " + String(t) + "°C\nCO Level: " + String(a) + "ppm");
-      line_sent = true;
+    // Serial.print("Humidity: ");
+    // Serial.print(h);
+    // Serial.print("%  Temperature: ");
+    // Serial.print(t);
+    // Serial.print("°C CO level: ");
+    // Serial.print(a);
+    // Serial.println("PPM");
+    if (millis() - line_last_sent > 10000){
+      // Serial.println(">> SENT TO LINE : t=" + String(abs(t - ideal_temp)) + ", h=" + String(abs(h - ideal_humid)) + ", a=" + String(a));
+      if(abs(t - ideal_temp) > critical_temp){
+        if(t > ideal_temp) {
+          LINE.notify("!! ALERT: TEMPERATURE IS TOO HIGH !!\nCurrent Temperature is " + String(t) + "°C");
+        } else {
+          LINE.notify("!! ALERT: TEMPERATURE IS TOO LOW !!\nCurrent Temperature is " + String(t) + "°C");
+        }
+        line_last_sent = millis();
+      }
+      if(abs(h - ideal_humid) > critical_humid){
+        if(h > ideal_humid) {
+          LINE.notify("!! ALERT: HUMIDITY IS TOO HIGH !!\nCurrent Humidity is " + String(h) + "%");
+        } else {
+          LINE.notify("!! ALERT: HUMIDITY IS TOO LOW !!\nCurrent Humidity is " + String(h) + "%");
+        }
+        line_last_sent = millis();
+      }
+      if(a > critical_CO){
+        LINE.notify("!! ALERT: CO LEVEL IS TOO HIGH !!\nCurrent Carbon Monoxide level is " + String(a) + "PPM");
+        line_last_sent = millis();
+      }
     }
   }
   else

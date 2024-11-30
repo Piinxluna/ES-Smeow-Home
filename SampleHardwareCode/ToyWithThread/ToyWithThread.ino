@@ -1,10 +1,10 @@
-#include <Arduino.h>
 #include <DHT.h>
 #include <WiFi.h>
 #include <FirebaseClient.h>
 #include <ArduinoJson.h>
 #include <ESP32Servo.h>
 #include <TridentTD_LineNotify.h>
+#include <Arduino.h>
 
 #define WIFI_SSID "JLTOT_2.4G"
 #define WIFI_PASSWORD "70be9055"
@@ -68,8 +68,8 @@ TaskHandle_t LaserTask;
 TaskHandle_t WeatherTask;
 
 SemaphoreHandle_t xSemaphore;
-void LaserTaskcode(void *pvParameters);
-void WeatherTaskcode(void *pvParameters);
+void LaserTaskcode( void * pvParameters );
+void WeatherTaskcode( void * pvParameters );
 
 void setup()
 {
@@ -114,39 +114,38 @@ void setup()
   LINE.setToken(LINE_TOKEN);
 
   // Initial delay for sensor to stabilize
-  delay(2000);
+  delay(2000); 
 
   // Set up Threads
   xSemaphore = xSemaphoreCreateBinary();
   xSemaphoreGive(xSemaphore);
 
   xTaskCreatePinnedToCore(
-      LaserTaskcode,
-      "LaserTask",
-      10000,
-      NULL,
-      1,
+      LaserTaskcode,  
+      "LaserTask",    
+      10000,      
+      NULL,       
+      1,         
       &LaserTask,
-      0);
+      0           
+  );
   xTaskCreatePinnedToCore(
-      WeatherTaskcode,
-      "WeatherTask",
-      10000,
-      NULL,
-      1,
-      &WeatherTask,
-      1);
+      WeatherTaskcode, 
+      "WeatherTask",   
+      10000,     
+      NULL,    
+      1,         
+      &WeatherTask,  
+      1         
+  );
 }
 
 void loop() {}
 
 // Laser Task : cControl laser to play with cats
-void LaserTaskcode(void *pvParameters)
-{
-  for (;;)
-  {
-    if (xSemaphoreTake(xSemaphore, (TickType_t)10) == pdTRUE)
-    {
+void LaserTaskcode( void * pvParameters ){
+  for(;;){
+    if (xSemaphoreTake(xSemaphore, (TickType_t)10) == pdTRUE) {
       // Control servo motor
       int rand = esp_random();
       int rand2 = esp_random();
@@ -155,21 +154,18 @@ void LaserTaskcode(void *pvParameters)
       int randDeg2 = std::abs(rand) % 180;
       // myServo1.write(randDeg);
       // myServo2.write(randDeg2);
-
+      
       // Release the semaphore
       xSemaphoreGive(xSemaphore);
       vTaskDelay(500 / portTICK_PERIOD_MS); // Delay 500 ms
     }
-  }
+  }  
 }
 
 // Weather Task : Detect Temp, Humidity, Air quality & send data to firebase & notify via line
-void WeatherTaskcode(void *pvParameters)
-{
-  for (;;)
-  {
-    if (xSemaphoreTake(xSemaphore, (TickType_t)10) == pdTRUE)
-    {
+void WeatherTaskcode( void * pvParameters ){
+  for(;;){
+    if (xSemaphoreTake(xSemaphore, (TickType_t)10) == pdTRUE) {
       // Read data
       app.loop();
       Database.loop();
@@ -206,45 +202,34 @@ void WeatherTaskcode(void *pvParameters)
         // Serial.println("PPM");
 
         // Check if something is critical and send line notify alert
-        if (millis() - line_last_sent > 10000)
-        {
+        if (millis() - line_last_sent > 10000){
           // Serial.println(">> SENT TO LINE : t=" + String(abs(t - ideal_temp)) + ", h=" + String(abs(h - ideal_humid)) + ", a=" + String(a));
-          if (abs(t - ideal_temp) > critical_temp)
-          {
-            if (t > ideal_temp)
-            {
+          if(abs(t - ideal_temp) > critical_temp){
+            if(t > ideal_temp) {
               LINE.notify("!! ALERT: TEMPERATURE IS TOO HIGH !!\nCurrent Temperature is " + String(t) + "°C");
-            }
-            else
-            {
+            } else {
               LINE.notify("!! ALERT: TEMPERATURE IS TOO LOW !!\nCurrent Temperature is " + String(t) + "°C");
             }
             line_last_sent = millis();
           }
-          if (abs(h - ideal_humid) > critical_humid)
-          {
-            if (h > ideal_humid)
-            {
+          if(abs(h - ideal_humid) > critical_humid){
+            if(h > ideal_humid) {
               LINE.notify("!! ALERT: HUMIDITY IS TOO HIGH !!\nCurrent Humidity is " + String(h) + "%");
-            }
-            else
-            {
+            } else {
               LINE.notify("!! ALERT: HUMIDITY IS TOO LOW !!\nCurrent Humidity is " + String(h) + "%");
             }
             line_last_sent = millis();
           }
-          if (a > critical_CO)
-          {
+          if(a > critical_CO){
             LINE.notify("!! ALERT: CO LEVEL IS TOO HIGH !!\nCurrent Carbon Monoxide level is " + String(a) + "PPM");
             line_last_sent = millis();
           }
         }
-      }
-      else
+      } else
       {
         Serial.println("Failed to read from DHT sensor!");
       }
-
+      
       // Release the semaphore
       xSemaphoreGive(xSemaphore);
       vTaskDelay(500 / portTICK_PERIOD_MS); // Delay 500 ms
