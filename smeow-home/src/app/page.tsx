@@ -98,8 +98,8 @@ export default function Home() {
       </div>
 
       {/* Right Section */}
-      <div className="flex flex-col w-full lg:w-[30%] items-center justify-center h-full space-y-8 mx-auto">
-        <Header className="hidden lg:flex mb-6" />
+      <div className="flex flex-col w-full lg:w-[30%] items-center justify-center h-full space-y-6 mt-4 mx-auto">
+        <Header className="hidden lg:flex mb-6 mt-4" />
         <CurrentTemp
           variant="primary"
           Temp={weather?.temperature ?? 0}
