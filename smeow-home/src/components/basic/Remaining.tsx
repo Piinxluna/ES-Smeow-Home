@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 type RemainingProps = {
   variant?: 'water' | 'food';
-  percent: number;
+  remainingAmount: number;
   nextRefill: string;
   className?: string;
   width?: string; // New prop for width
@@ -12,12 +12,13 @@ type RemainingProps = {
 
 export default function Remaining({
   variant = 'water',
-  percent,
+  remainingAmount,
   nextRefill,
   className = '',
   width = '4', // Default width in px
 }: RemainingProps) {
   let theme = 'font-semibold bg-white w-full h-fit rounded-lg';
+  const percent = Math.round((remainingAmount * 100) / 1000);
   if (variant === 'water') {
     return (
     <Link href="/water" className='w-full'>
