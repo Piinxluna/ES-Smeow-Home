@@ -20,7 +20,7 @@ interface Weather {
 
 interface Live {
   image: string
-  yyncTime: string
+  syncTime: string
 }
 
 interface Water {

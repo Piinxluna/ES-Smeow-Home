@@ -18,7 +18,7 @@ export default function CurrentTemp({
     tempColor = 'text-egreen';
   } else if (Math.abs(Temp - ideal) <= 6) {
     tempColor = 'text-eyellow';
-  } else if (Math.abs(Temp - ideal) <= 9) {
+  } else {
     tempColor = 'text-ered';
   }
 
