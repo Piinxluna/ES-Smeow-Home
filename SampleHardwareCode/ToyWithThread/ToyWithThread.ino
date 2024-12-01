@@ -3,7 +3,7 @@
 #include <FirebaseClient.h>
 #include <ArduinoJson.h>
 #include <ESP32Servo.h>
-#include <TridentTD_LineNotify.h>
+// #include <TridentTD_LineNotify.h>
 #include <Arduino.h>
 
 #define WIFI_SSID "JLTOT_2.4G"
@@ -18,11 +18,11 @@ const int servoPin2 = 12;
 const int servoPin1 = 13;
 
 // Define Laser Pin
-const int LASER = 4;
+const int LASER = 18;
 
 #define DHTPIN 25     // GPIO Number
 #define DHTTYPE DHT22 // Or DHT22 or DHT21
-#define MQ_7 35
+#define MQ_7 35`
 
 void asyncCB(AsyncResult &aResult);
 float analysisCO(int);
@@ -49,12 +49,13 @@ AsyncClient aClient(ssl_client, getNetwork(network));
 RealtimeDatabase Database;
 
 unsigned long tmo = 0;
+unsigned long tmo_2 = 0;
 
 DHT dht(DHTPIN, DHTTYPE);
 
 // Line notify
-#define LINE_TOKEN "9J4MCiXa7aDUbNpNwsUCsl4jl7A2OmeKjXot2H5MQHt"
-unsigned long line_last_sent = 0;
+// #define LINE_TOKEN "9J4MCiXa7aDUbNpNwsUCsl4jl7A2OmeKjXot2H5MQHt"
+// unsigned long line_last_sent = 0;
 
 // Critical value
 float ideal_temp = 25;
@@ -63,6 +64,9 @@ float critical_temp = 9;
 float critical_humid = 10;
 float critical_CO = 70;
 
+// laserMode 
+int laserMode = 0;
+
 // Thread
 TaskHandle_t LaserTask;
 TaskHandle_t WeatherTask;
@@ -70,6 +74,7 @@ TaskHandle_t WeatherTask;
 SemaphoreHandle_t xSemaphore;
 void LaserTaskcode( void * pvParameters );
 void WeatherTaskcode( void * pvParameters );
+void laserModePlay(int mode);
 
 void setup()
 {
@@ -99,7 +104,7 @@ void setup()
   // Set up PINs
   dht.begin();
   myServo1.attach(servoPin1);
-  myServo1.attach(servoPin2);
+  myServo2.attach(servoPin2);
   Serial.println("SetUp");
   myServo1.write(0);
   myServo2.write(0);
@@ -110,8 +115,8 @@ void setup()
   pinMode(MQ_7, INPUT);
 
   // Set up Line notify
-  Serial.println(LINE.getVersion());
-  LINE.setToken(LINE_TOKEN);
+  // Serial.println(LINE.getVersion());
+  // LINE.setToken(LINE_TOKEN);
 
   // Initial delay for sensor to stabilize
   delay(2000); 
@@ -146,18 +151,12 @@ void loop() {}
 void LaserTaskcode( void * pvParameters ){
   for(;;){
     if (xSemaphoreTake(xSemaphore, (TickType_t)10) == pdTRUE) {
-      // Control servo motor
-      int rand = esp_random();
-      int rand2 = esp_random();
 
-      int randDeg = std::abs(rand) % 180;
-      int randDeg2 = std::abs(rand) % 180;
-      // myServo1.write(randDeg);
-      // myServo2.write(randDeg2);
+      laserModePlay(laserMode);
       
       // Release the semaphore
       xSemaphoreGive(xSemaphore);
-      vTaskDelay(500 / portTICK_PERIOD_MS); // Delay 500 ms
+      vTaskDelay(100 / portTICK_PERIOD_MS); // Delay 500 ms
     }
   }  
 }
@@ -189,6 +188,7 @@ void WeatherTaskcode( void * pvParameters ){
         // Database.set<number_t>(aClient, "/temperature", number_t(t), asyncCB);
         // Database.set<number_t>(aClient, "/humidity", number_t(h), asyncCB);
         Database.set<object_t>(aClient, "/weather", object_t(serializedObj), asyncCB);
+        Database.get(aClient, "/control", asyncCB, false, "laserMode");
       }
 
       if (!isnan(h) && !isnan(t) && !isnan(a))
@@ -202,29 +202,29 @@ void WeatherTaskcode( void * pvParameters ){
         // Serial.println("PPM");
 
         // Check if something is critical and send line notify alert
-        if (millis() - line_last_sent > 10000){
+        // if (millis() - line_last_sent > 10000){
           // Serial.println(">> SENT TO LINE : t=" + String(abs(t - ideal_temp)) + ", h=" + String(abs(h - ideal_humid)) + ", a=" + String(a));
-          if(abs(t - ideal_temp) > critical_temp){
-            if(t > ideal_temp) {
-              LINE.notify("!! ALERT: TEMPERATURE IS TOO HIGH !!\nCurrent Temperature is " + String(t) + "°C");
-            } else {
-              LINE.notify("!! ALERT: TEMPERATURE IS TOO LOW !!\nCurrent Temperature is " + String(t) + "°C");
-            }
-            line_last_sent = millis();
-          }
-          if(abs(h - ideal_humid) > critical_humid){
-            if(h > ideal_humid) {
-              LINE.notify("!! ALERT: HUMIDITY IS TOO HIGH !!\nCurrent Humidity is " + String(h) + "%");
-            } else {
-              LINE.notify("!! ALERT: HUMIDITY IS TOO LOW !!\nCurrent Humidity is " + String(h) + "%");
-            }
-            line_last_sent = millis();
-          }
-          if(a > critical_CO){
-            LINE.notify("!! ALERT: CO LEVEL IS TOO HIGH !!\nCurrent Carbon Monoxide level is " + String(a) + "PPM");
-            line_last_sent = millis();
-          }
-        }
+        //   if(abs(t - ideal_temp) > critical_temp){
+        //     if(t > ideal_temp) {
+        //       LINE.notify("!! ALERT: TEMPERATURE IS TOO HIGH !!\nCurrent Temperature is " + String(t) + "°C");
+        //     } else {
+        //       LINE.notify("!! ALERT: TEMPERATURE IS TOO LOW !!\nCurrent Temperature is " + String(t) + "°C");
+        //     }
+        //     line_last_sent = millis();
+        //   }
+        //   if(abs(h - ideal_humid) > critical_humid){
+        //     if(h > ideal_humid) {
+        //       LINE.notify("!! ALERT: HUMIDITY IS TOO HIGH !!\nCurrent Humidity is " + String(h) + "%");
+        //     } else {
+        //       LINE.notify("!! ALERT: HUMIDITY IS TOO LOW !!\nCurrent Humidity is " + String(h) + "%");
+        //     }
+        //     line_last_sent = millis();
+        //   }
+        //   if(a > critical_CO){
+        //     LINE.notify("!! ALERT: CO LEVEL IS TOO HIGH !!\nCurrent Carbon Monoxide level is " + String(a) + "PPM");
+        //     line_last_sent = millis();
+        //   }
+        // }
       } else
       {
         Serial.println("Failed to read from DHT sensor!");
@@ -232,7 +232,7 @@ void WeatherTaskcode( void * pvParameters ){
       
       // Release the semaphore
       xSemaphoreGive(xSemaphore);
-      vTaskDelay(500 / portTICK_PERIOD_MS); // Delay 500 ms
+      vTaskDelay(100 / portTICK_PERIOD_MS); // Delay 1000 ms
     }
   }
 }
@@ -260,6 +260,26 @@ void asyncCB(AsyncResult &aResult)
   if (aResult.available())
   {
     Firebase.printf("task: %s, payload: %s\n", aResult.uid().c_str(), aResult.c_str());
+
+    // Check if the resultPath matches the expected path
+      if (aResult.path() == "/control") {
+        // Parse the JSON payload
+        StaticJsonDocument<256> jsonDoc; // Adjust size as needed
+        DeserializationError error = deserializeJson(jsonDoc, aResult.c_str());
+
+        if (error) {
+          Serial.print("JSON deserialization failed: ");
+          Serial.println(error.c_str());
+          return;
+        }
+
+        // Access the "openWater" field
+        if (jsonDoc.containsKey("laserMode")) {
+          laserMode = jsonDoc["laserMode"];
+        } else {
+          Serial.println("Key 'laserMode' not found in JSON payload.");
+        }
+      }
   }
 }
 
@@ -280,3 +300,69 @@ float analysisCO(int adc)
   float CO_ppm = pow(10, (log10(Y / A) / slope));
   return CO_ppm;
 }
+
+void laserModePlay(int mode) {
+  // Static variables to maintain state across function calls
+  static int currentX = 45; // Initial X position
+  static int currentY = 70; // Initial Y position
+  static bool toggleX = false; // Toggle state for X-axis
+  static bool toggleY = false; // Toggle state for Zig Zag Flip
+  static bool toggleLaser = false; // Toggle state for laser blinking in Dash mode
+
+  if (mode == 0) {
+    // Off Mode: Set servos to 90° and turn off laser
+    myServo1.write(90);
+    myServo2.write(90);
+    digitalWrite(LASER, LOW);
+  } else if (mode == 1) {
+    // Random Mode: Randomize servo positions every 0.5 seconds
+    int randX = random(0, 180);
+    int randY = random(0, 180);
+    myServo1.write(randX);
+    myServo2.write(randY);
+    digitalWrite(LASER, HIGH); // Laser always on
+  } else if (mode == 2) {
+    // Zig Zag Mode
+    currentX = toggleX ? 135 : 45; // Alternate X between 45° and 135°
+    toggleX = !toggleX; // Toggle X state
+    myServo1.write(currentX); // Write X position
+
+    if (currentY > 40) {
+      currentY--; // Gradually decrease Y-axis position
+    } else {
+      currentY = 70; // Reset Y to 70° when it reaches 40°
+    }
+    myServo2.write(currentY); // Write Y position
+    digitalWrite(LASER, HIGH); // Laser always on
+  } else if (mode == 3) {
+    // Zig Zag Flip Mode
+    currentY = toggleY ? 70 : 40; // Alternate Y between 40° and 70°
+    toggleY = !toggleY; // Toggle Y state
+    myServo2.write(currentY); // Write Y position
+
+    if (currentX < 135) {
+      currentX++; // Gradually increase X-axis position
+    } else {
+      currentX = 45; // Reset X to 45° when it reaches 135°
+    }
+    myServo1.write(currentX); // Write X position
+    digitalWrite(LASER, HIGH); // Laser always on
+  } else if (mode == 4) {
+    // Circle Mode
+    static int angle = 0; // Initial angle for circular motion
+    int x = 75 + 30 * sin(angle * PI / 180); // X-axis oscillation (75° to 105°)
+    int y = 55 + 15 * cos(angle * PI / 180); // Y-axis oscillation (40° to 70°)
+    myServo1.write(x);
+    myServo2.write(y);
+    digitalWrite(LASER, HIGH); // Laser always on
+    angle = (angle + 10) % 360; // Increment angle for next step
+  } else if (mode == 5) {
+    // Dash Mode
+    currentX = (currentX < 150) ? currentX + 3 : 30; // Move X between 30° and 150°
+    myServo1.write(currentX); // Write X position
+    myServo2.write(60); // Keep Y fixed at 60°
+    toggleLaser = !toggleLaser; // Toggle laser state
+    digitalWrite(LASER, toggleLaser ? HIGH : LOW); // Blink laser every 3 degrees
+  }
+}
+
