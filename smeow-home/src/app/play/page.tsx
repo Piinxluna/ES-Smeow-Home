@@ -222,7 +222,15 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className='w-[30%] h-[240px] rounded-lg bg-darkgray'></div>
+          <div className='w-[30%] h-[240px] rounded-lg bg-darkgray'>
+            {mode !== 0 && (
+              <img
+                src={`/images/LaserMode${mode}.png`}
+                alt='Laser Example'
+                className='w-full h-full'
+              />
+            )}
+          </div>
         </div>
       </div>
     </main>
