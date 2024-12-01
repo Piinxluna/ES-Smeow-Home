@@ -11,6 +11,7 @@ import Remaining from '@/components/basic/Remaining'
 import Header from '@/components/basic/Header'
 import Link from 'next/link'
 import CurrentCML from '@/components/basic/CurrentCML'
+import LiveWithAIDetect from '@/components/LiveWithAIDetect'
 
 export default function Home() {
   const [weather, setWeather] = useState<Weather>()
@@ -97,7 +98,9 @@ export default function Home() {
               />
             </Link>
           </div>
-          <div className='absolute top-0 lg:mt-40 mt-24 ml-4 lg:ml-10 w-[90%] lg:h-[76%] h-[64%] bg-darkgray rounded-lg z-10 flex items-center justify-center' />
+          <div className='absolute top-0 lg:mt-40 mt-24 ml-4 lg:ml-10 w-[90%] lg:h-[76%] h-[64%] bg-darkgray rounded-lg z-10 flex items-center justify-center overflow-hidden'>
+            <LiveWithAIDetect />
+          </div>
         </div>
       </div>
 
