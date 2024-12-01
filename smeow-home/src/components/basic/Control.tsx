@@ -27,7 +27,7 @@ export default function Control({
   variant === 'water'
     ? (description = 'Open / Close cat fountain')
     : (description = 'Drop food from automatic feeder');
-  if (!isTrue) {
+  if (isTrue) {
     buttonType = 'primary';
     act = 'Close';
     inAct = 'Open';
