@@ -94,10 +94,10 @@ export default function AutoFeeding() {
                 </div>
               </div>
               </div>
-              <Control 
+{/*               <Control 
                 variant="food"
                 className="flex transform scale-150 flex-grow"
-              />
+              /> */}
             </div>
           </main>
   )

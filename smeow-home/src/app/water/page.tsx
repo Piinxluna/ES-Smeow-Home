@@ -17,6 +17,7 @@ export default function Water() {
   const [water, setWater] = useState<Water>()
   const [control, setControl] = useState<Control>()
 
+  
   useEffect(() => {
     const fetchData = () => {
       const databaseRef = ref(database)
@@ -56,7 +57,7 @@ export default function Water() {
         <Header className='ml-2'></Header>
         <div className='flex flex-row w-full justify-center items-center mt-4 mb-6'>
           <img
-            src='/resources/images/Water.png'
+            src='/images/Water.png'
             alt={'water icon'}
             className='rounded-lg h-6 max-w-md'
           />
@@ -73,7 +74,7 @@ export default function Water() {
           today={water?.totalToday ?? 0}
           className='mt-6 mb-6 w-full'
         ></ConsumeBehavior>
-        <Control variant='water' isTrue={!!control} className='w-full mb-4 ' />
+        <Control variant='water' isTrue={!control} className='w-full mb-4 ' />
         <BacktoHomeButton className='mt-4 px-28'></BacktoHomeButton>
       </div>
 
@@ -104,7 +105,7 @@ export default function Water() {
             today={water?.totalToday ?? 0}
             className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'
           ></ConsumeBehavior>
-          <Control variant='water' isTrue={!!control} className='' />
+          <Control variant='water' isTrue={!control} className='' />
         </div>
       </div>
     </main>
