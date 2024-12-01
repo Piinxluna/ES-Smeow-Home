@@ -8,15 +8,15 @@ import { getDatabase } from 'firebase/database'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyAGEdWt-jl63U323XFH_lZZTNHiNtEgl-g',
+  apiKey: process.env.FB_API_KEY,
   authDomain: 'embeddedsystem-smeowhome.firebaseapp.com',
   databaseURL:
     'https://embeddedsystem-smeowhome-default-rtdb.asia-southeast1.firebasedatabase.app',
   projectId: 'embeddedsystem-smeowhome',
   storageBucket: 'embeddedsystem-smeowhome.firebasestorage.app',
-  messagingSenderId: '919069312251',
-  appId: '1:919069312251:web:845aa78bd9522f906fdc5e',
-  measurementId: 'G-X4JTM1SW30',
+  messagingSenderId: process.env.FB_MESS_SENDER_ID,
+  appId: process.env.FB_API_ID,
+  measurementId: process.env.FB_MEASUREMENT_ID,
 }
 
 // Initialize Firebase
