@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { database } from '@/app/firebaseConfig'
 
 export default function Home() {
-  const [activeButton, setActiveButton] = useState<string>('')
+  const [activeButton, setactiveButton] = useState<string>('')
   const [mode, setMode] = useState<number>()
 
   const handleModeChange = async (clickedMode: number) => {
@@ -68,22 +68,22 @@ export default function Home() {
           <p className='text-black text-2xl font-bold ml-2'>Turn on laser</p>
           <div className='flex flex-row space-x-4 mt-4 ml-4'>
             <OnOffButton
-              Active='Off'
-              InActive='Off'
+              active='Off'
+              inActive='Off'
               isSelected={activeButton === 'Off'}
               className='font-extrabold'
               onClick={() => {
-                setActiveButton(activeButton === 'Off' ? '' : 'Off')
+                setactiveButton(activeButton === 'Off' ? '' : 'Off')
                 handleModeChange(0)
               }}
             />
             <OnOffButton
-              Active='Random'
-              InActive='Random'
+              active='Random'
+              inActive='Random'
               isSelected={activeButton === 'Random'}
               className='font-extrabold'
               onClick={() => {
-                setActiveButton(activeButton === 'Random' ? '' : 'Random')
+                setactiveButton(activeButton === 'Random' ? '' : 'Random')
                 handleModeChange(1)
               }}
             />
@@ -91,22 +91,22 @@ export default function Home() {
 
           <div className='flex flex-row  space-x-4 mt-2 ml-4'>
             <OnOffButton
-              Active='Zig-Zag'
-              InActive='Zig-Zag'
+              active='Zig-Zag'
+              inActive='Zig-Zag'
               isSelected={activeButton === 'Zig-Zag'}
               className='font-extrabold'
               onClick={() => {
-                setActiveButton(activeButton === 'Zig-Zag' ? '' : 'Zig-Zag')
+                setactiveButton(activeButton === 'Zig-Zag' ? '' : 'Zig-Zag')
                 handleModeChange(2)
               }}
             />
             <OnOffButton
-              Active='Zig-Zag Flip'
-              InActive='Zig-Zag Flip'
+              active='Zig-Zag Flip'
+              inActive='Zig-Zag Flip'
               isSelected={activeButton === 'Zig-Zag Flip'}
               className='font-extrabold'
               onClick={() => {
-                setActiveButton(
+                setactiveButton(
                   activeButton === 'Zig-Zag Flip' ? '' : 'Zig-Zag Flip'
                 )
                 handleModeChange(3)
@@ -116,22 +116,22 @@ export default function Home() {
 
           <div className='flex flex-row  space-x-4 mt-2 ml-4'>
             <OnOffButton
-              Active='Circle'
-              InActive='Circle'
+              active='Circle'
+              inActive='Circle'
               isSelected={activeButton === 'Circle'}
               className='font-extrabold'
               onClick={() => {
-                setActiveButton(activeButton === 'Circle' ? '' : 'Circle')
+                setactiveButton(activeButton === 'Circle' ? '' : 'Circle')
                 handleModeChange(4)
               }}
             />
             <OnOffButton
-              Active='Dash'
-              InActive='Dash'
+              active='Dash'
+              inActive='Dash'
               isSelected={activeButton === 'Dash'}
               className='font-extrabold'
               onClick={() => {
-                setActiveButton(activeButton === 'Dash' ? '' : 'Dash')
+                setactiveButton(activeButton === 'Dash' ? '' : 'Dash')
                 handleModeChange(5)
               }}
             />
@@ -161,61 +161,61 @@ export default function Home() {
             <p className='text-black text-2xl font-bold mb-4'>Turn on Laser</p>
             <div className='flex flex-row space-x-4'>
               <OnOffButton
-                Active='Off'
-                InActive='Off'
+                active='Off'
+                inActive='Off'
                 isSelected={activeButton === 'Off'}
                 onClick={() => {
-                  setActiveButton('Off')
+                  setactiveButton('Off')
                   handleModeChange(0)
                 }}
                 className=''
               />
               <OnOffButton
-                Active='Random'
-                InActive='Random'
+                active='Random'
+                inActive='Random'
                 isSelected={activeButton === 'Random'}
                 onClick={() => {
-                  setActiveButton('Random')
+                  setactiveButton('Random')
                   handleModeChange(1)
                 }}
                 className=''
               />
               <OnOffButton
-                Active='Zig-Zag'
-                InActive='Zig-Zag'
+                active='Zig-Zag'
+                inActive='Zig-Zag'
                 isSelected={activeButton === 'Zig-Zag'}
                 onClick={() => {
-                  setActiveButton('Zig-Zag')
+                  setactiveButton('Zig-Zag')
                   handleModeChange(2)
                 }}
                 className=''
               />
               <OnOffButton
-                Active='Zig-Zag flip'
-                InActive='Zig-Zag flip'
+                active='Zig-Zag flip'
+                inActive='Zig-Zag flip'
                 isSelected={activeButton === 'Zig-Zag flip'}
                 onClick={() => {
-                  setActiveButton('Zig-Zag flip')
+                  setactiveButton('Zig-Zag flip')
                   handleModeChange(3)
                 }}
                 className=''
               />
               <OnOffButton
-                Active='Circle'
-                InActive='Circle'
+                active='Circle'
+                inActive='Circle'
                 isSelected={activeButton === 'Circle'}
                 onClick={() => {
-                  setActiveButton('Circle')
+                  setactiveButton('Circle')
                   handleModeChange(4)
                 }}
                 className=''
               />
               <OnOffButton
-                Active='Dash'
-                InActive='Dash'
+                active='Dash'
+                inActive='Dash'
                 isSelected={activeButton === 'Dash'}
                 onClick={() => {
-                  setActiveButton('Dash')
+                  setactiveButton('Dash')
                   handleModeChange(5)
                 }}
                 className=''

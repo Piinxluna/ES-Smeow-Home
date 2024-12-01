@@ -13,9 +13,7 @@ import Remaining from '@/components/basic/Remaining'
 import RemainingDetails from '@/components/basic/RemainingDetails'
 
 export default function Water() {
-  const [isReady, setIsReady] = useState(false)
   const [water, setWater] = useState<Water>()
-  const [control, setControl] = useState<Control>()
 
   useEffect(() => {
     const fetchData = () => {
@@ -32,20 +30,6 @@ export default function Water() {
         })
         .catch((error) => {
           console.log('Error fetching water:', error)
-        })
-      // Fetch water data
-      get(child(databaseRef, 'control' + '/openWater'))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            const controlVal = snapshot.val()
-            setControl(controlVal)
-            console.log('controlVal', controlVal)
-          } else {
-            console.log('no water open data available')
-          }
-        })
-        .catch((error) => {
-          console.log('Error fetching water data:', error)
         })
     }
     fetchData()
@@ -74,7 +58,7 @@ export default function Water() {
           today={water?.totalToday ?? 0}
           className='mt-6 mb-6 w-full'
         ></ConsumeBehavior>
-        <Control variant='water' isTrue={!!control} className='w-full mb-4 ' />
+        <Control variant='water' className='w-full mb-4 ' />
         <BacktoHomeButton className='mt-4 px-28'></BacktoHomeButton>
       </div>
 
@@ -105,7 +89,7 @@ export default function Water() {
             today={water?.totalToday ?? 0}
             className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'
           ></ConsumeBehavior>
-          <Control variant='water' isTrue={!!control} className='' />
+          <Control variant='water' className='' />
         </div>
       </div>
     </main>
