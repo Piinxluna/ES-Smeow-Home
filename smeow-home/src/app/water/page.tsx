@@ -1,9 +1,8 @@
 'use client'
 
-import { child, get, ref, set } from 'firebase/database'
+import { child, get, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
 import { database } from '@/app/firebaseConfig'
-import Image from 'next/image'
 
 import BacktoHomeButton from '@/components/basic/BackToHomeButton'
 import ConsumeBehavior from '@/components/basic/ConsumeBehavior'
