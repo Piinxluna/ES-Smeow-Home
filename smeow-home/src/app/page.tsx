@@ -86,7 +86,7 @@ export default function Home() {
               (Last sync at {live?.syncTime})
             </p>
             <Link
-              href='/watch-live'
+              href='http://35.198.245.230/'
               className='cursor-pointer absolute top-0 right-0 lg:mt-32 mt-16 mr-4 lg:mr-32'
             >
               <Image
