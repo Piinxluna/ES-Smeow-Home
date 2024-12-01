@@ -14,15 +14,15 @@
 // #define USER_PASSWORD "USER_PASSWORD"
 
 // Define servo pin
-const int servoPin2 = 12;
-const int servoPin1 = 13;
+const int servoPin2 = 13;
+const int servoPin1 = 12;
 
 // Define Laser Pin
 const int LASER = 18;
 
 #define DHTPIN 25     // GPIO Number
 #define DHTTYPE DHT22 // Or DHT22 or DHT21
-#define MQ_7 35`
+#define MQ_7 35
 
 void asyncCB(AsyncResult &aResult);
 float analysisCO(int);
@@ -106,8 +106,8 @@ void setup()
   myServo1.attach(servoPin1);
   myServo2.attach(servoPin2);
   Serial.println("SetUp");
-  myServo1.write(0);
-  myServo2.write(0);
+  myServo1.write(90);
+  myServo2.write(00);
 
   pinMode(LASER, OUTPUT);
   digitalWrite(LASER, HIGH);
@@ -316,27 +316,29 @@ void laserModePlay(int mode) {
     digitalWrite(LASER, LOW);
   } else if (mode == 1) {
     // Random Mode: Randomize servo positions every 0.5 seconds
-    int randX = random(0, 180);
-    int randY = random(0, 180);
+    int randX = random(30, 160);
+    int randY = random(90, 180);
     myServo1.write(randX);
     myServo2.write(randY);
+    delay(100);
     digitalWrite(LASER, HIGH); // Laser always on
   } else if (mode == 2) {
     // Zig Zag Mode
-    currentX = toggleX ? 135 : 45; // Alternate X between 45° and 135°
+    currentX = toggleX ? 160 : 100; // Alternate X between 45° and 135°
     toggleX = !toggleX; // Toggle X state
     myServo1.write(currentX); // Write X position
 
-    if (currentY > 40) {
+    if (currentY > 45) {
       currentY--; // Gradually decrease Y-axis position
     } else {
-      currentY = 70; // Reset Y to 70° when it reaches 40°
+      currentY = 135; // Reset Y to 100° when it reaches 160°
     }
     myServo2.write(currentY); // Write Y position
     digitalWrite(LASER, HIGH); // Laser always on
+    delay(100);
   } else if (mode == 3) {
     // Zig Zag Flip Mode
-    currentY = toggleY ? 70 : 40; // Alternate Y between 40° and 70°
+    currentY = toggleY ? 160 : 130; // Alternate Y between 40° and 70°
     toggleY = !toggleY; // Toggle Y state
     myServo2.write(currentY); // Write Y position
 
@@ -347,11 +349,12 @@ void laserModePlay(int mode) {
     }
     myServo1.write(currentX); // Write X position
     digitalWrite(LASER, HIGH); // Laser always on
+    delay(50);
   } else if (mode == 4) {
     // Circle Mode
     static int angle = 0; // Initial angle for circular motion
     int x = 75 + 30 * sin(angle * PI / 180); // X-axis oscillation (75° to 105°)
-    int y = 55 + 15 * cos(angle * PI / 180); // Y-axis oscillation (40° to 70°)
+    int y = 120 + 15 * cos(angle * PI / 180); // Y-axis oscillation (100° to 70°)
     myServo1.write(x);
     myServo2.write(y);
     digitalWrite(LASER, HIGH); // Laser always on
@@ -360,9 +363,10 @@ void laserModePlay(int mode) {
     // Dash Mode
     currentX = (currentX < 150) ? currentX + 3 : 30; // Move X between 30° and 150°
     myServo1.write(currentX); // Write X position
-    myServo2.write(60); // Keep Y fixed at 60°
+    myServo2.write(140); // Keep Y fixed at 60°
     toggleLaser = !toggleLaser; // Toggle laser state
     digitalWrite(LASER, toggleLaser ? HIGH : LOW); // Blink laser every 3 degrees
+    delay(50);
   }
 }
 
