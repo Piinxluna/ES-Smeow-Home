@@ -40,3 +40,33 @@ interface FeedingControl {
   feedingTime: string[] // will change later
   isAutoMode: boolean
 }
+
+interface AzureImageDetect {
+  objects: AzureImageDetectObject[]
+  requestId: string
+  metadata: {
+    height: number
+    width: number
+    format: string
+  }
+  modelVersion: string
+}
+
+interface AzureImageDetectObject {
+  rectangle: Rectangle
+  object: string
+  confidence: number
+  parent: any
+}
+
+interface Rectangle {
+  x: number
+  y: number
+  w: number
+  h: number
+}
+
+interface Dimension {
+  w: number
+  h: number
+}

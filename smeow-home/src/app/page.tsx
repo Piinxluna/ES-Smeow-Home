@@ -11,7 +11,7 @@ import Remaining from '@/components/basic/Remaining'
 import Header from '@/components/basic/Header'
 import Link from 'next/link'
 import CurrentCML from '@/components/basic/CurrentCML'
-import LiveWithAIDetect from '@/components/LiveWithAIDetect'
+import LiveWithAIDetect from '@/components/live/LiveWithAIDetect'
 
 export default function Home() {
   const [weather, setWeather] = useState<Weather>()
@@ -45,7 +45,15 @@ export default function Home() {
         .catch((error) => console.log('Error fetching water:', error))
 
       // Fetch live data
-      setLive({ image: '', syncTime: '18/11/2024, 15:10:36' })
+      get(child(databaseRef, 'live'))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            setLive(snapshot.val())
+          } else {
+            console.log('No live data available')
+          }
+        })
+        .catch((error) => console.log('Error fetching live:', error))
     }
 
     fetchData()
@@ -71,6 +79,7 @@ export default function Home() {
             height={700}
             alt='Meow Background'
             className='w-full rounded-lg'
+            priority
           />
           <div className='absolute top-0 text-l w-[90%]'>
             <Image
@@ -84,7 +93,11 @@ export default function Home() {
               Live
             </p>
             <p className='absolute top-0 hidden lg:block text-sm text-darkgray w-full lg:mt-32 lg:ml-64'>
-              (Last sync at {live?.syncTime})
+              (Last sync at{' '}
+              {live?.syncTime
+                ? new Date(live.syncTime).toLocaleString('th-TH')
+                : '-'}
+              )
             </p>
             <Link
               href='http://35.198.245.230/'
@@ -99,7 +112,7 @@ export default function Home() {
             </Link>
           </div>
           <div className='absolute top-0 lg:mt-40 mt-24 ml-4 lg:ml-10 w-[90%] lg:h-[76%] h-[64%] bg-darkgray rounded-lg z-10 flex items-center justify-center overflow-hidden'>
-            <LiveWithAIDetect />
+            <LiveWithAIDetect img={live?.image} />
           </div>
         </div>
       </div>
