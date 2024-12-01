@@ -27,6 +27,8 @@ export default function Remaining({
 
   if (!nextRefill) {
     nextRefillString = '-'
+  } else if (!totalLastHour) {
+    nextRefillString = 'ต้องการสถิติการกินน้ำของแมวเพื่อคำนวณ'
   } else {
     if (nextRefill / 24 > 0) {
       nextRefillString = nextRefill / 24 + 'Days '
