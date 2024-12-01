@@ -17,13 +17,13 @@ export default function CurrentCML({
     CMLColor = 'text-egreen'
   } else if (CML <= 69) {
     CMLColor = 'text-eyellow'
-  } else if (CML <= 100) {
+  } else {
     CMLColor = 'text-ered'
   }
 
   if (variant === 'primary') {
     return (
-      <div className={`${theme} ${className} md:py-4 md:px-8 px-28 py-4`}>
+      <div className={`${theme} ${className} md:py-4 md:px-8 px-16 py-4`}>
         <h2 className='text-center text-2xl text-black font-bold mb-2'>
           CO Level
         </h2>
