@@ -25,7 +25,7 @@ export default function NavBar({
           <Button variant='primary' href='/play'>
             Laser
           </Button>
-          <Button variant='primary' href='/watch-live'>
+          <Button variant='primary' href='http://35.198.245.230/'>
             WatchLive
           </Button>
         </div>
@@ -46,7 +46,7 @@ export default function NavBar({
         <Button variant='secondary' href='/play' className='p-2 bg-white'>
           Laser
         </Button>
-        <Button variant='secondary' href='/watch-live' className='p-2 bg-white'>
+        <Button variant='secondary' href='http://35.198.245.230/' className='p-2 bg-white'>
           WatchLive
         </Button>
       </div>
