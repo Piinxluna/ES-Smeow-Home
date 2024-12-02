@@ -12,27 +12,36 @@ import Remaining from '@/components/basic/Remaining'
 import RemainingDetails from '@/components/basic/RemainingDetails'
 
 export default function Water() {
+  const [isReady, setIsReady] = useState(false)
   const [water, setWater] = useState<Water>()
 
   useEffect(() => {
-    const fetchData = () => {
-      const databaseRef = ref(database)
-      // Fetch water data
-      get(child(databaseRef, 'water'))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            const waterVal = snapshot.val()
-            setWater(waterVal)
-          } else {
-            console.log('no water data available')
-          }
-        })
-        .catch((error) => {
-          console.log('Error fetching water:', error)
-        })
-    }
-    fetchData()
-  }, [])
+    // Implementing the setInterval method
+    const interval = setInterval(() => {
+      setIsReady(false)
+      fetchData()
+    }, 3000)
+
+    // Clearing the interval
+    return () => clearInterval(interval)
+  }, [water])
+
+  const fetchData = () => {
+    const databaseRef = ref(database)
+    // Fetch water data
+    get(child(databaseRef, 'water'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const waterVal = snapshot.val()
+          setWater(waterVal)
+        } else {
+          console.log('no water data available')
+        }
+      })
+      .catch((error) => {
+        console.log('Error fetching water:', error)
+      })
+  }
 
   return (
     <main className='flex flex-col md:px-32 md:py-16 px-6 py-8'>
