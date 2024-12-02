@@ -19,6 +19,10 @@ export default function Home() {
   const [live, setLive] = useState<Live>()
 
   useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
     // Implementing the setInterval method
     const interval = setInterval(() => {
       fetchData()

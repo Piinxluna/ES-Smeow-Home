@@ -6,13 +6,7 @@ export default function LiveWithAIDetect({ img }: { img: string | undefined }) {
   const [box, setBox] = useState<Rectangle>()
 
   useEffect(() => {
-    // Implementing the setInterval method
-    const interval = setInterval(() => {
-      getCurrentImg()
-    }, 6000)
-
-    // Clearing the interval
-    return () => clearInterval(interval)
+    getCurrentImg()
   }, [img])
 
   const getCurrentImg = async () => {

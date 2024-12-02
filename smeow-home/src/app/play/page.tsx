@@ -30,25 +30,25 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const fetchData = () => {
-      const databaseRef = ref(database)
-      // Fetch water data
-      get(child(databaseRef, 'control/laserMode'))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            const modeval = snapshot.val()
-            setMode(modeval)
-          } else {
-            console.log('no laser mode data available')
-          }
-        })
-        .catch((error) => {
-          console.log('Error fetching laser mode:', error)
-        })
-    }
-
     fetchData()
   }, [])
+
+  const fetchData = () => {
+    const databaseRef = ref(database)
+    // Fetch water data
+    get(child(databaseRef, 'control/laserMode'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const modeval = snapshot.val()
+          setMode(modeval)
+        } else {
+          console.log('no laser mode data available')
+        }
+      })
+      .catch((error) => {
+        console.log('Error fetching laser mode:', error)
+      })
+  }
 
   return (
     <main className='flex min-h-screen flex-col md:py-16 md:px-24 px-6 py-8'>

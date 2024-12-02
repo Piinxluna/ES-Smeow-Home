@@ -16,6 +16,10 @@ export default function Water() {
   const [water, setWater] = useState<Water>()
 
   useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
     // Implementing the setInterval method
     const interval = setInterval(() => {
       setIsReady(false)
