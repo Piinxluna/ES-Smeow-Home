@@ -1,12 +1,12 @@
-#include <DHT.h>
+#include <Arduino.h>
 #include <WiFi.h>
+#include <DHT.h>
 #include <FirebaseClient.h>
 #include <ArduinoJson.h>
 #include <ESP32Servo.h>
 #include <TridentTD_LineNotify.h>
-#include <Arduino.h>
 
-#define WIFI_SSID "TextForEmbedded"
+#define WIFI_SSID "TestForEmbedded"
 #define WIFI_PASSWORD "HackingHotspot"
 
 // #define API_KEY "Web_API_KEY"
@@ -201,7 +201,7 @@ void WeatherTaskcode( void * pvParameters ){
         Serial.print(a);
         Serial.println("PPM");
 
-        Check if something is critical and send line notify alert
+        // Check if something is critical and send line notify alert
         if (millis() - line_last_sent > 10000){
           Serial.println(">> SENT TO LINE : t=" + String(abs(t - ideal_temp)) + ", h=" + String(abs(h - ideal_humid)) + ", a=" + String(a));
           if(abs(t - ideal_temp) > critical_temp){
