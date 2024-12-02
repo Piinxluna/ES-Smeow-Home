@@ -9,7 +9,7 @@ export default function LiveWithAIDetect({ img }: { img: string | undefined }) {
     // Implementing the setInterval method
     const interval = setInterval(() => {
       getCurrentImg()
-    }, 5000)
+    }, 6000)
 
     // Clearing the interval
     return () => clearInterval(interval)
