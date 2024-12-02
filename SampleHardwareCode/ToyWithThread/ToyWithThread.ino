@@ -3,11 +3,11 @@
 #include <FirebaseClient.h>
 #include <ArduinoJson.h>
 #include <ESP32Servo.h>
-// #include <TridentTD_LineNotify.h>
+#include <TridentTD_LineNotify.h>
 #include <Arduino.h>
 
-#define WIFI_SSID "JLTOT_2.4G"
-#define WIFI_PASSWORD "70be9055"
+#define WIFI_SSID "TextForEmbedded"
+#define WIFI_PASSWORD "HackingHotspot"
 
 // #define API_KEY "Web_API_KEY"
 // #define USER_EMAIL "USER_EMAIL"
@@ -54,8 +54,8 @@ unsigned long tmo_2 = 0;
 DHT dht(DHTPIN, DHTTYPE);
 
 // Line notify
-// #define LINE_TOKEN "9J4MCiXa7aDUbNpNwsUCsl4jl7A2OmeKjXot2H5MQHt"
-// unsigned long line_last_sent = 0;
+#define LINE_TOKEN "9J4MCiXa7aDUbNpNwsUCsl4jl7A2OmeKjXot2H5MQHt"
+unsigned long line_last_sent = 0;
 
 // Critical value
 float ideal_temp = 25;
@@ -115,8 +115,8 @@ void setup()
   pinMode(MQ_7, INPUT);
 
   // Set up Line notify
-  // Serial.println(LINE.getVersion());
-  // LINE.setToken(LINE_TOKEN);
+  Serial.println(LINE.getVersion());
+  LINE.setToken(LINE_TOKEN);
 
   // Initial delay for sensor to stabilize
   delay(2000); 
@@ -193,38 +193,38 @@ void WeatherTaskcode( void * pvParameters ){
 
       if (!isnan(h) && !isnan(t) && !isnan(a))
       {
-        // Serial.print("Humidity: ");
-        // Serial.print(h);
-        // Serial.print("%  Temperature: ");
-        // Serial.print(t);
-        // Serial.print("°C CO level: ");
-        // Serial.print(a);
-        // Serial.println("PPM");
+        Serial.print("Humidity: ");
+        Serial.print(h);
+        Serial.print("%  Temperature: ");
+        Serial.print(t);
+        Serial.print("°C CO level: ");
+        Serial.print(a);
+        Serial.println("PPM");
 
-        // Check if something is critical and send line notify alert
-        // if (millis() - line_last_sent > 10000){
-          // Serial.println(">> SENT TO LINE : t=" + String(abs(t - ideal_temp)) + ", h=" + String(abs(h - ideal_humid)) + ", a=" + String(a));
-        //   if(abs(t - ideal_temp) > critical_temp){
-        //     if(t > ideal_temp) {
-        //       LINE.notify("!! ALERT: TEMPERATURE IS TOO HIGH !!\nCurrent Temperature is " + String(t) + "°C");
-        //     } else {
-        //       LINE.notify("!! ALERT: TEMPERATURE IS TOO LOW !!\nCurrent Temperature is " + String(t) + "°C");
-        //     }
-        //     line_last_sent = millis();
-        //   }
-        //   if(abs(h - ideal_humid) > critical_humid){
-        //     if(h > ideal_humid) {
-        //       LINE.notify("!! ALERT: HUMIDITY IS TOO HIGH !!\nCurrent Humidity is " + String(h) + "%");
-        //     } else {
-        //       LINE.notify("!! ALERT: HUMIDITY IS TOO LOW !!\nCurrent Humidity is " + String(h) + "%");
-        //     }
-        //     line_last_sent = millis();
-        //   }
-        //   if(a > critical_CO){
-        //     LINE.notify("!! ALERT: CO LEVEL IS TOO HIGH !!\nCurrent Carbon Monoxide level is " + String(a) + "PPM");
-        //     line_last_sent = millis();
-        //   }
-        // }
+        Check if something is critical and send line notify alert
+        if (millis() - line_last_sent > 10000){
+          Serial.println(">> SENT TO LINE : t=" + String(abs(t - ideal_temp)) + ", h=" + String(abs(h - ideal_humid)) + ", a=" + String(a));
+          if(abs(t - ideal_temp) > critical_temp){
+            if(t > ideal_temp) {
+              LINE.notify("!! ALERT: TEMPERATURE IS TOO HIGH !!\nCurrent Temperature is " + String(t) + "°C");
+            } else {
+              LINE.notify("!! ALERT: TEMPERATURE IS TOO LOW !!\nCurrent Temperature is " + String(t) + "°C");
+            }
+            line_last_sent = millis();
+          }
+          if(abs(h - ideal_humid) > critical_humid){
+            if(h > ideal_humid) {
+              LINE.notify("!! ALERT: HUMIDITY IS TOO HIGH !!\nCurrent Humidity is " + String(h) + "%");
+            } else {
+              LINE.notify("!! ALERT: HUMIDITY IS TOO LOW !!\nCurrent Humidity is " + String(h) + "%");
+            }
+            line_last_sent = millis();
+          }
+          if(a > critical_CO){
+            LINE.notify("!! ALERT: CO LEVEL IS TOO HIGH !!\nCurrent Carbon Monoxide level is " + String(a) + "PPM");
+            line_last_sent = millis();
+          }
+        }
       } else
       {
         Serial.println("Failed to read from DHT sensor!");
