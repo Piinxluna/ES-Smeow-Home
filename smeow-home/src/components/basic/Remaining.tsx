@@ -23,18 +23,20 @@ export default function Remaining({
     percent = 100
   }
   let nextRefill = remainingAmount / totalLastHour
+  if (totalLastHour === 0) {
+    nextRefill = remainingAmount / 10
+  }
   let nextRefillString = ''
 
   if (!nextRefill) {
     nextRefillString = '-'
-  } else if (!totalLastHour) {
-    nextRefillString = 'ต้องการสถิติการกินน้ำของแมวเพื่อคำนวณ'
   } else {
-    if (nextRefill / 24 > 0) {
-      nextRefillString = nextRefill / 24 + 'Days '
+    if (Math.round(nextRefill / 24) > 0) {
+      nextRefillString = Math.round(nextRefill / 24) + ' Days '
     }
     if (nextRefill % 24 > 0 || nextRefill / 24 === 0) {
-      nextRefillString = nextRefillString + (nextRefill % 24) + 'Hours'
+      nextRefillString =
+        nextRefillString + Math.round(nextRefill % 24) + ' Hours'
     }
   }
 

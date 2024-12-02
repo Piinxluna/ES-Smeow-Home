@@ -139,7 +139,7 @@ export default function Home() {
         <Remaining
           variant='water'
           remainingAmount={water?.waterLeft ?? 0}
-          totalLastHour={water?.totalLastHour ?? 0}
+          totalLastHour={water?.lastHourPercent ?? 0}
           className='w-full'
         />
       </div>

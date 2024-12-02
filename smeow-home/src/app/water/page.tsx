@@ -62,8 +62,8 @@ export default function Water() {
         ></RemainingDetails>
         <ConsumeBehavior
           variant='water'
-          lastHour={water?.totalLastHour ?? 0}
-          today={water?.totalToday ?? 0}
+          lastHour={water?.lastHourPercent ?? 0}
+          today={water?.lastDayPercent ?? 0}
           className='mt-6 mb-6 w-full'
         ></ConsumeBehavior>
         <Control variant='water' className='w-full mb-4 ' />
@@ -93,8 +93,8 @@ export default function Water() {
           </div>
           <ConsumeBehavior
             variant='water'
-            lastHour={water?.totalLastHour ?? 0}
-            today={water?.totalToday ?? 0}
+            lastHour={water?.lastHourPercent ?? 0}
+            today={water?.lastDayPercent ?? 0}
             className='py-7 flex-grow mt-9 ml-32 mr-24 transform scale-125'
           ></ConsumeBehavior>
           <Control variant='water' className='' />

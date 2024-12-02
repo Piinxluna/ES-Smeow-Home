@@ -24,8 +24,8 @@ interface Live {
 }
 
 interface Water {
-  totalLastHour: number
-  totalToday: number
+  lastHourPercent: number
+  lastDayPercent: number
   waterLeft: number
 }
 
