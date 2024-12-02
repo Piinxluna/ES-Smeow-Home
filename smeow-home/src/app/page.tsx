@@ -19,45 +19,51 @@ export default function Home() {
   const [live, setLive] = useState<Live>()
 
   useEffect(() => {
-    const fetchData = () => {
-      const databaseRef = ref(database)
+    // Implementing the setInterval method
+    const interval = setInterval(() => {
+      fetchData()
+    }, 3000)
 
-      // Fetch weather data
-      get(child(databaseRef, 'weather'))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            setWeather(snapshot.val())
-          } else {
-            console.log('No weather data available')
-          }
-        })
-        .catch((error) => console.log('Error fetching weather:', error))
+    // Clearing the interval
+    return () => clearInterval(interval)
+  }, [weather, water, live])
 
-      // Fetch water data
-      get(child(databaseRef, 'water'))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            setWater(snapshot.val())
-          } else {
-            console.log('No water data available')
-          }
-        })
-        .catch((error) => console.log('Error fetching water:', error))
+  const fetchData = () => {
+    const databaseRef = ref(database)
 
-      // Fetch live data
-      get(child(databaseRef, 'live'))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            setLive(snapshot.val())
-          } else {
-            console.log('No live data available')
-          }
-        })
-        .catch((error) => console.log('Error fetching live:', error))
-    }
+    // Fetch weather data
+    get(child(databaseRef, 'weather'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setWeather(snapshot.val())
+        } else {
+          console.log('No weather data available')
+        }
+      })
+      .catch((error) => console.log('Error fetching weather:', error))
 
-    fetchData()
-  }, [])
+    // Fetch water data
+    get(child(databaseRef, 'water'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setWater(snapshot.val())
+        } else {
+          console.log('No water data available')
+        }
+      })
+      .catch((error) => console.log('Error fetching water:', error))
+
+    // Fetch live data
+    get(child(databaseRef, 'live'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setLive(snapshot.val())
+        } else {
+          console.log('No live data available')
+        }
+      })
+      .catch((error) => console.log('Error fetching live:', error))
+  }
 
   return (
     <main className='flex flex-col lg:flex-row justify-center items-center lg:items-start px-4 lg:px-12 py-8 max-h-full'>
